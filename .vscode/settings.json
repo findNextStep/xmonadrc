@@ -1,0 +1,13 @@
+{
+    "search.useIgnoreFiles": false,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "*.hi":true,
+        "*.o":true,
+        "xmonad-x86_64-linux":true
+    }
+}
