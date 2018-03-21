@@ -1,11 +1,15 @@
 module TheNext.DefalutApp
     (
         terminal,
-        webBrowser
+        webBrowser,
+        launcher
     )where
 
 terminal::String
 terminal = "urxvt"
+
+launcher::String
+launcher = "dmenu_run"
 
 -- | const my web browser
 webBrowser::String

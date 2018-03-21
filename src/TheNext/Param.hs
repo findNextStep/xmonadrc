@@ -16,17 +16,17 @@ workspaces :: [WorkspaceId]
 workspaces = map show [1 .. 9 :: Int]
 
 focusFollowsMouse :: Bool
-focusFollowsMouse = True
+focusFollowsMouse = False
 
 clickJustFocuses :: Bool
 clickJustFocuses = True
 
 borderWidth :: Dimension
-borderWidth = 1
+borderWidth = 3
 
 defaultModMask :: KeyMask
 defaultModMask = mod4Mask
 
 normalBorderColor, focusedBorderColor :: String
-normalBorderColor  = "gray" -- "#dddddd"
-focusedBorderColor = "red"  -- "#ff0000" don't use hex, not <24 bit safe
+normalBorderColor  = "#000000"
+focusedBorderColor = "#325A8E" -- don't use hex, not <24 bit safe

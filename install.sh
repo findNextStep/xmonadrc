@@ -1,0 +1,1 @@
+apt install xmonad cabal dmenu feh

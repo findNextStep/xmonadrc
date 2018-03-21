@@ -14,25 +14,21 @@ import qualified XMonad.Core as XMonad
 
 import XMonad.Layout
 import XMonad.Operations
-import XMonad.ManageHook
 import qualified XMonad.StackSet as W
 import Data.Bits ((.|.))
-import Data.Default
-import Data.Monoid
 import qualified Data.Map as M
 import System.Exit
 import Graphics.X11.Xlib
-import Graphics.X11.Xlib.Extras
 import qualified TheNext.DefalutApp as APP
 
 keys:: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
     -- launch a terminal
-    [ ((modm ,              xK_Return), spawn "urxvt")
+    [ ((modm ,              xK_Return), spawn APP.terminal)
 
     -- launch dmenu
-    , ((modm,               xK_p     ), spawn "dmenu_run")
+    , ((modm,               xK_p     ), spawn APP.launcher)
 
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
@@ -48,6 +44,9 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
     -- Move focus to the next window
     , ((modm,               xK_Tab   ), windows W.focusDown)
+
+    -- 出于习惯
+    , ((mod1Mask,            xK_Tab   ), windows W.focusDown)
 
     -- Move focus to the next window
     , ((modm,               xK_j     ), windows W.focusDown)
