@@ -17,9 +17,10 @@ import XMonad.Operations
 import qualified XMonad.StackSet as W
 import Data.Bits ((.|.))
 import qualified Data.Map as M
-import System.Exit
+import System.Exit(exitSuccess)
 import Graphics.X11.Xlib
 import qualified TheNext.DefalutApp as APP
+import qualified TheNext.Param as Param
 
 keys:: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
@@ -85,6 +86,15 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
 
     ,((modm .|. shiftMask , xK_q     ),  io exitSuccess)
+    -- | 音量控制
+
+    -- | 音量增加
+    ,((modm               , xK_F5    ), spawn ("pactl set-sink-volume 0 -" ++ Param.volumeInterval ++ "%"))
+    -- | 音量减少
+    ,((modm               , xK_F6    ), spawn ("pactl set-sink-volume 0 +" ++ Param.volumeInterval ++ "%"))
+    -- | 立即静音
+    ,((modm               , xK_F3    ), spawn "pactl set-sink-volume 0 0f")
+
     ]
     ++
 

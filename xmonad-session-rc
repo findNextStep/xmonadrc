@@ -1,1 +1,4 @@
 # run before xmonad start
+if [ -f ~/.xmonad/background.jpg ];then
+xloadimage -onroot -fullscreen ~/.xmonad/background.jpg
+fi

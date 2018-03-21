@@ -29,3 +29,7 @@ using version 1.22.5.0 of the Cabal library
 feh version 2.14
 Compile-time switches: curl exif xinerama
 ```
+
+## 桌面背景
+
+~/.xmonad/background.jpg将被用作背景
