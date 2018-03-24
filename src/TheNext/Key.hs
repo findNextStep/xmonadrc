@@ -93,7 +93,7 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- | 音量减少
     ,((modm               , xK_F6    ), spawn ("pactl set-sink-volume 0 +" ++ Param.volumeInterval ++ "%"))
     -- | 立即静音
-    ,((modm               , xK_F3    ), spawn "pactl set-sink-volume 0 0f")
+    ,((modm               , xK_F3    ), spawn "pactl set-sink-volume 0 0")
 
     ]
     ++
