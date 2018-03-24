@@ -1,6 +1,6 @@
 module TheNext.Key(
     mouseBindings,
-    keys 
+    keys
 )where
 
 import XMonad.Core as XMonad hiding
@@ -22,7 +22,16 @@ import Graphics.X11.Xlib
 import qualified TheNext.DefalutApp as APP
 import qualified TheNext.Param as Param
 
-altMask = mod1Mask 
+-- | 可以通过xmodmap确定按键绑定
+-- | 在我的电脑上左右alt都是mod1
+altMask = mod1Mask
+letfAltMask = 0x40
+rightAltMask = 0x6c
+leftCtrlMask = 0x25
+rightCtrlMask = 0x69
+letfShiftMask = 0x32
+rightShiftMask = 0x3e
+superMask = mod4Mask
 
 keys:: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
@@ -38,12 +47,12 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
     -- 关闭程序
     [ ((modm .|. shiftMask  , xK_c          ), kill)
-    , ((altMask             , xK_F4         ), kill)
+    , ((letfAltMask         , xK_F4         ), kill)
 
     -- 下一个布局算法
     , ((modm                , xK_space      ), sendMessage NextLayout)
 
-    -- 重置布局算法 
+    -- 重置布局算法
     , ((modm .|. shiftMask  , xK_space      ), setLayout $ XMonad.layoutHook conf)
 
     -- 重新设置屏幕
@@ -52,7 +61,7 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- 锁定下一个窗口
     , ((modm                , xK_Tab        ), windows W.focusDown)
     -- 出于习惯
-    , ((altMask             , xK_Tab        ), windows W.focusDown)
+    , ((letfAltMask         , xK_Tab        ), windows W.focusDown)
 
     -- 锁定下一个窗口
     , ((modm                , xK_j          ), windows W.focusDown)
@@ -94,14 +103,14 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     ,((modm .|. shiftMask   , xK_q          ),  io exitSuccess)
     ]
     ++
-    
+
     -- | 音量控制
     -- | 音量增加
-    [((modm               , xK_F5    ), spawn ("pactl set-sink-volume 0 -" ++ Param.volumeInterval ++ "%"))
+    [((modm               , xK_F5    ), spawn $ "pactl set-sink-volume 0 -" ++ Param.volumeInterval ++ "%")
     -- | 音量减少
-    ,((modm               , xK_F6    ), spawn ("pactl set-sink-volume 0 +" ++ Param.volumeInterval ++ "%"))
+    ,((modm               , xK_F6    ), spawn $ "pactl set-sink-volume 0 +" ++ Param.volumeInterval ++ "%")
     -- | 立即静音
-    ,((modm               , xK_F3    ), spawn "pactl set-sink-volume 0 0")
+    ,((modm               , xK_F3    ), spawn "pactl set-sink-mute 0 toggle")
 
     ]
     ++
