@@ -11,6 +11,6 @@ terminal = "urxvt"
 launcher::String
 launcher = "dmenu_run"
 
--- | const my web browser
+-- | 默认浏览器
 webBrowser::String
 webBrowser = "google-chrome"

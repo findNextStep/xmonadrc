@@ -15,14 +15,13 @@ manageHook = composeAll
                 [ className =? "MPlayer"        --> doFloat
                 , className =? "mplayer2"       --> doFloat
                 , className =? "Gimp"           --> doFloat
-                , className =? "xclock"         --> doFloat 
+                , appName   =? "xclock"         --> doFloat 
                 , resource  =? "desktop_window" --> doIgnore
                 , resource  =? "kdesktop"       --> doIgnore ]
 
 clientMask :: EventMask
 clientMask = structureNotifyMask .|. enterWindowMask .|. propertyChangeMask
 
--- | The root events that xmonad is interested in
 rootMask :: EventMask
 rootMask =  substructureRedirectMask .|. substructureNotifyMask
         .|. enterWindowMask .|. leaveWindowMask .|. structureNotifyMask

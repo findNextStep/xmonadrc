@@ -22,74 +22,83 @@ import Graphics.X11.Xlib
 import qualified TheNext.DefalutApp as APP
 import qualified TheNext.Param as Param
 
+altMask = mod1Mask 
+
 keys:: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
-    -- launch a terminal
-    [ ((modm ,              xK_Return), spawn APP.terminal)
+    -- 启动app
+    -- 启动一个终端
+    [ ((modm                , xK_Return     ), spawn APP.terminal)
 
-    -- launch dmenu
-    , ((modm,               xK_p     ), spawn APP.launcher)
+    -- 启动启动器
+    , ((modm                , xK_p          ), spawn APP.launcher)
+    ]
+    ++
 
-    -- close focused window
-    , ((modm .|. shiftMask, xK_c     ), kill)
+    -- 关闭程序
+    [ ((modm .|. shiftMask  , xK_c          ), kill)
+    , ((altMask             , xK_F4         ), kill)
 
-     -- Rotate through the available layout algorithms
-    , ((modm,               xK_space ), sendMessage NextLayout)
+    -- 下一个布局算法
+    , ((modm                , xK_space      ), sendMessage NextLayout)
 
-    --  Reset the layouts on the current workspace to default
-    , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
+    -- 重置布局算法 
+    , ((modm .|. shiftMask  , xK_space      ), setLayout $ XMonad.layoutHook conf)
 
     -- Resize viewed windows to the correct size
-    , ((modm,               xK_n     ), refresh)
+    , ((modm                , xK_n          ), refresh)
 
-    -- Move focus to the next window
-    , ((modm,               xK_Tab   ), windows W.focusDown)
+    -- 锁定下一个窗口
+    , ((modm                , xK_Tab        ), windows W.focusDown)
 
     -- 出于习惯
-    , ((mod1Mask,            xK_Tab   ), windows W.focusDown)
+    , ((altMask             , xK_Tab        ), windows W.focusDown)
 
-    -- Move focus to the next window
-    , ((modm,               xK_j     ), windows W.focusDown)
+    -- 锁定下一个窗口
+    , ((modm                , xK_j          ), windows W.focusDown)
 
-    -- Move focus to the previous window
-    , ((modm,               xK_k     ), windows W.focusUp  )
+    -- 锁定上一个窗口
+    , ((modm                , xK_k          ), windows W.focusUp)
 
-    -- Move focus to the master window
-    , ((modm,               xK_m     ), windows W.focusMaster  )
+    -- 锁定主窗口
+    , ((modm                , xK_m          ), windows W.focusMaster)
 
-    -- Swap the focused window and the master window
-    , ((modm .|. shiftMask, xK_Return), windows W.swapMaster)
+    -- 将当前窗口放入主区域
+    , ((modm .|. shiftMask  , xK_Return     ), windows W.swapMaster)
 
-    -- Swap the focused window with the next window
-    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
+    -- 转换到上一个位置
+    , ((modm .|. shiftMask  , xK_j          ), windows W.swapDown)
 
-    -- Swap the focused window with the previous window
-    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
+    -- 转换到下一个位置
+    , ((modm .|. shiftMask  , xK_k          ), windows W.swapUp)
 
-    -- Shrink the master area
-    , ((modm,               xK_h     ), sendMessage Shrink)
+    -- 缩小主窗口
+    , ((modm                , xK_h          ), sendMessage Shrink)
 
-    -- Expand the master area
-    , ((modm,               xK_l     ), sendMessage Expand)
+    -- 放大主窗口
+    , ((modm                , xK_l          ), sendMessage Expand)
 
-    -- Push window back into tiling
-    , ((modm,               xK_t     ), withFocused $ windows . W.sink)
+    -- 使得窗口退出float模式
+    , ((modm                , xK_t          ), withFocused $ windows . W.sink)
 
-    -- Increment the number of windows in the master area
-    -- , ((modm              , xK_comma ), sendMessag  e (IncMasterN 1))
+    -- super + , 
+    , ((modm                , xK_comma      ), sendMessage (IncMasterN 1))
 
     -- Deincrement the number of windows in the master area
-    , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
+    , ((modm                , xK_period     ), sendMessage (IncMasterN (-1)))
 
-    -- Restart xmonad
-    , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
+    -- 重启xmonad
+    , ((modm                , xK_q          ), spawn "xmonad --recompile && xmonad --restart")
 
-    ,((modm .|. shiftMask , xK_q     ),  io exitSuccess)
+    -- 退出xmonad
+    ,((modm .|. shiftMask   , xK_q          ),  io exitSuccess)
+    ]
+    ++
+    
     -- | 音量控制
-
     -- | 音量增加
-    ,((modm               , xK_F5    ), spawn ("pactl set-sink-volume 0 -" ++ Param.volumeInterval ++ "%"))
+    [((modm               , xK_F5    ), spawn ("pactl set-sink-volume 0 -" ++ Param.volumeInterval ++ "%"))
     -- | 音量减少
     ,((modm               , xK_F6    ), spawn ("pactl set-sink-volume 0 +" ++ Param.volumeInterval ++ "%"))
     -- | 立即静音
@@ -97,26 +106,15 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
     ]
     ++
-
-    --
-    -- mod-[1..9], Switch to workspace N
-    -- mod-shift-[1..9], Move client to workspace N
-    --
+    -- 工作区切换
     [((m .|. modm, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
     ++
-
-    --
-    -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
-    -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
-    --
+    -- 多屏幕控制
     [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
-        -- where
-        --     helpCommand :: X ()
-        --     helpCommand = spawn ("echo | xmessage -file -")  -- %! Run xmessage with a summary of the default keybindings (useful for beginners)
 
 mouseBindings :: XConfig Layout -> M.Map (KeyMask, Button) (Window -> X ())
 mouseBindings XConfig {XMonad.modMask = modMask} = M.fromList

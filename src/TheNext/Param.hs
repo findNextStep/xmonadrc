@@ -18,7 +18,7 @@ workspaces = map show [1 .. 9 :: Int]
 
 
 -- | 窗口锁定不跟随鼠标移动
--- 主要是为了防止触摸板误触
+--   主要是为了防止触摸板误触
 focusFollowsMouse :: Bool
 focusFollowsMouse = False
 
