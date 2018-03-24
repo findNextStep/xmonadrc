@@ -46,12 +46,11 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- 重置布局算法 
     , ((modm .|. shiftMask  , xK_space      ), setLayout $ XMonad.layoutHook conf)
 
-    -- Resize viewed windows to the correct size
-    , ((modm                , xK_n          ), refresh)
+    -- 重新设置屏幕
+    , ((modm                , xK_n          ), rescreen)
 
     -- 锁定下一个窗口
     , ((modm                , xK_Tab        ), windows W.focusDown)
-
     -- 出于习惯
     , ((altMask             , xK_Tab        ), windows W.focusDown)
 
@@ -82,10 +81,10 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- 使得窗口退出float模式
     , ((modm                , xK_t          ), withFocused $ windows . W.sink)
 
-    -- super + , 
+    -- super + ,  增加主区域的窗口数量
     , ((modm                , xK_comma      ), sendMessage (IncMasterN 1))
 
-    -- Deincrement the number of windows in the master area
+    -- super + . 减少主区域的窗口数量
     , ((modm                , xK_period     ), sendMessage (IncMasterN (-1)))
 
     -- 重启xmonad
