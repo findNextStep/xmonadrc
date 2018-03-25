@@ -16,18 +16,24 @@
 
 ```shell
 > xmonad --version
-xmonad 0.12
+xmonad 0.13
 
 > ghc --version
 The Glorious Glasgow Haskell Compilation System, version 7.10.3
 
 > cabal --version
-cabal-install version 1.22.6.0
-using version 1.22.5.0 of the Cabal library
+cabal-install version 2.0.0.1
+compiled using version 2.0.1.1 of the Cabal library 
 
 > feh -v
 feh version 2.14
 Compile-time switches: curl exif xinerama
+
+> hsetroot --version
+hsetroot 1.0.2 - yet another wallpaper application
+
+> xcompmgr --version
+xcompmgr v1.1.7
 ```
 
 ## 桌面背景

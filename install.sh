@@ -1,1 +1,1 @@
-apt install xmonad cabal dmenu feh
+apt install xmonad cabal dmenu feh taffybar hsetroot xcompmgr
