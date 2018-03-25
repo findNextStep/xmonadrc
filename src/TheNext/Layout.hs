@@ -2,8 +2,8 @@ module TheNext.Layout(
     layout
 )where
 import XMonad.Layout
-import Data.Monoid
-layout = tiled ||| Mirror tiled ||| Full
+import XMonad.Hooks.ManageDocks(avoidStruts)
+layout = avoidStruts(tiled ||| Mirror tiled ||| Full)
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio

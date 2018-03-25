@@ -3,7 +3,6 @@ module TheNext.Param(
     focusFollowsMouse,
     clickJustFocuses,
     borderWidth,
-    defaultModMask,
     normalBorderColor, 
     focusedBorderColor,
     volumeInterval
@@ -29,10 +28,6 @@ clickJustFocuses = True
 -- | 窗口边框粗细
 borderWidth :: Dimension
 borderWidth = 3
-
--- | 默认关键键位，设置为super键
-defaultModMask :: KeyMask
-defaultModMask = mod4Mask
 
 -- | 确定各种状况下的窗口边框颜色
 normalBorderColor, focusedBorderColor :: String

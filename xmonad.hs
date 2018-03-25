@@ -1,11 +1,20 @@
 import XMonad
-import XMonad.Util.Run(spawnPipe)
 import TheNext
+import XMonad.Util.Run                  (spawnPipe)
+import System.Taffybar.Hooks.PagerHints (pagerHints)
+import XMonad.Hooks.ManageDocks         (docks,manageDocks)
+import XMonad.Hooks.EwmhDesktops        (ewmh)
+import DBus.Client                      (connectSession)
+import System.Taffybar.XMonadLog        (dbusLog)
 
 main = do
+    client <- connectSession
     -- | 设置窗口透明和切换特效
     xmproc <- spawnPipe "xcompmgr -Ss -n -Cc -fF -I-10 -O-10 -D1 -t-3 -l-4 -r4&"
-    xmonad defaults
+    -- | 启动taffybar
+    xmproc <- spawnPipe "taffybar"
+    xmonad $ docks $ ewmh $ pagerHints defaults
+
 defaults = XConfig
     { XMonad.borderWidth        = TheNext.borderWidth
     , XMonad.workspaces         = TheNext.workspaces
