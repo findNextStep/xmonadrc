@@ -12,6 +12,7 @@ import System.Taffybar.Weather
 import System.Taffybar.Widgets.PollingBar()
 import System.Taffybar.Widgets.PollingGraph
 import System.Taffybar.WorkspaceHUD
+import System.Taffybar.Battery
 memCallback :: IO [Double]
 memCallback = do
   mi <- parseMeminfo
@@ -41,12 +42,13 @@ main = do
   let clock = textClockNew Nothing "<span fgcolor='orange'>%a %b %_d %H:%M</span>" 1
       -- pager = hudFromPagerConfig defaultWorkspaceHUDConfig
       note = notifyAreaNew defaultNotificationConfig
+      battery = batteryBarNew defaultBatteryConfig 10
       wea = weatherNew (defaultWeatherConfig "KMSN") 10
       mpris = mprisNew defaultMPRISConfig
       mem = pollingGraphNew memCfg 1 memCallback
       cpu = pollingGraphNew cpuCfg 0.5 cpuCallback
       tray = systrayNew
   defaultTaffybar defaultTaffybarConfig { startWidgets = [  note ]
-                                        , endWidgets = [ tray, wea, clock, mem, cpu, mpris ]
+                                        , endWidgets = [ tray, battery ,wea, clock, mem, cpu, mpris ]
                                         , barHeight     = 18
                                         }
