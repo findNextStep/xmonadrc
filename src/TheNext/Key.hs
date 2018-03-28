@@ -8,7 +8,7 @@ module TheNext.Key(
 
 import XMonad.Core                  as XMonad hiding    (keys,mouseBindings)
 import qualified XMonad.Core        as XMonad           (workspaces,layoutHook,modMask)
-import Data.Bits                                        ((.|.))
+import Data.Bits                                        ((.|.),(.&.))
 import System.Exit                                      (exitSuccess)
 import XMonad.Hooks.ManageDocks                         (ToggleStruts(..))
 import qualified XMonad.Operations  as OP
@@ -19,21 +19,15 @@ import qualified TheNext.Param      as Param
 import XMonad.Layout
 import Graphics.X11.Xlib
 
--- | 默认关键键位，设置为super键
-defaultModMask :: KeyMask
-defaultModMask = mod4Mask
 
 -- | 可以通过xmodmap确定按键绑定
 -- | 在我的电脑上左右alt都是mod1
 altMask = mod1Mask
-letfAltMask = 0x40
-rightAltMask = 0x6c
-leftCtrlMask = 0x25
-rightCtrlMask = 0x69
-letfShiftMask = 0x32
-rightShiftMask = 0x3e
 superMask = mod4Mask
 
+-- | 默认关键键位，设置为super键
+defaultModMask :: KeyMask
+defaultModMask = mod4Mask
 
 
 keys:: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
@@ -50,7 +44,6 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
     -- 关闭程序
     [ ((modm .|. shiftMask  , xK_c          ), OP.kill)
-    , ((letfAltMask         , xK_F4         ), OP.kill)
 
     -- 下一个布局算法
     , ((modm                , xK_space      ), OP.sendMessage NextLayout)
@@ -63,8 +56,6 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
     -- 锁定下一个窗口
     , ((modm                , xK_Tab        ), OP.windows W.focusDown)
-    -- 出于习惯
-    , ((letfAltMask         , xK_Tab        ), OP.windows W.focusDown)
 
     -- 锁定下一个窗口
     , ((modm                , xK_j          ), OP.windows W.focusDown)
