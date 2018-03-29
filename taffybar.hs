@@ -11,6 +11,7 @@ import System.Taffybar.Widgets.PollingGraph
 import System.Taffybar.TaffyPager
 import System.Taffybar.Battery
 import System.Taffybar.MPRIS
+import System.Taffybar.NetMonitor
 memCallback :: IO [Double]
 memCallback = do
   mi <- parseMeminfo
@@ -33,8 +34,9 @@ main = do
         ]
         , graphLabel = Just "cpu"
       }
-  let clock = textClockNew Nothing "<span fgcolor='orange'>%a %b %_d %H:%M</span>" 1
+  let clock = textClockNew Nothing "<span fgcolor='#fff'>%m-%d 星期%u %H:%M</span>" 30
       pager = taffyPagerHUDLegacy defaultPagerConfig
+      network = netMonitorMultiNew 2 ["enp4s0f1", "wlp3s0"]
       note = notifyAreaNew defaultNotificationConfig
       battery = batteryBarNew defaultBatteryConfig 10
       mpris = mprisNew defaultMPRISConfig
@@ -42,6 +44,6 @@ main = do
       cpu = pollingGraphNew cpuCfg 0.5 cpuCallback
       tray = systrayNew
   defaultTaffybar defaultTaffybarConfig { startWidgets = [  pager,note ]
-                                        , endWidgets = [ tray, battery , clock, mem, cpu, mpris ]
+                                        , endWidgets = [ tray,network, battery , clock, mem, cpu, mpris ]
                                         , barHeight     = 18
                                         }
