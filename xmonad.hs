@@ -2,10 +2,9 @@ import XMonad
 import TheNext
 import XMonad.Util.Run                  (spawnPipe)
 import System.Taffybar.Hooks.PagerHints (pagerHints)
-import XMonad.Hooks.ManageDocks         (docks,manageDocks)
+import XMonad.Hooks.ManageDocks         (docks)
 import XMonad.Hooks.EwmhDesktops        (ewmh)
 import DBus.Client                      (connectSession)
-import System.Taffybar.XMonadLog        (dbusLog)
 
 main = do
     client <- connectSession
