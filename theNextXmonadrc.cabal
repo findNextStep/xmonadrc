@@ -2,7 +2,7 @@
 -- documentation, see http://haskell.org/cabal/users-guide/
 
 name:                theNextXmonadrc
-version:             0.1.0.4
+version:             0.1.0.5
 -- synopsis:            
 description:         the_next xmonad configuration file         
 license:             BSD3
@@ -35,4 +35,4 @@ library
 -- 测试bar能否编译
 executable theNexttaffybar
   main-is: taffybar.hs
-  build-depends: base, taffybar
+  build-depends: base, taffybar, gtk
