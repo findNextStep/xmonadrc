@@ -18,18 +18,18 @@ memCallback = do
   return [memoryUsedRatio mi]
 
 toInt :: Double -> Int
-toInt x = round x
+toInt = round 
 
 makeColor :: [Double]-> String
-makeColor color = printf "#%02x%02x%02x" (toInt(color!!0 * 255)) (toInt(color!!1 * 255)) (toInt(color!!2 * 255))
+makeColor color = printf "#%02x%02x%02x" (toInt(head color * 255)) (toInt(color!!1 * 255)) (toInt(last color * 255))
 
 computerInfo ::IO String
 computerInfo = do
-  cpu <- (getCPULoad "cpu")
+  cpu <- getCPULoad "cpu"
   mem <- memCallback
   let
-    cpuBar = "<span font='monospace 10' fgcolor='"++(makeColor [cpu!!0,1.0-cpu!!0,0.0])++"'>cpu"  ++ (printf "%02.0f"(cpu !! 0 * 100)) ++ "%</span>"
-    memBar = "<span font='monospace 10' fgcolor='"++(makeColor [mem!!0,1.0-mem!!0,0.0])++"'>mem"  ++ (printf "%02.0f"(mem !! 0 * 100)) ++ "%</span>"
+    cpuBar = "<span font='monospace 10' fgcolor='"++makeColor [head cpu,1.0-head cpu,0.0]++"'>cpu"  ++ printf "%02.0f"(head cpu * 100) ++ "%</span>"
+    memBar = "<span font='monospace 10' fgcolor='"++makeColor [head mem,1.0-head mem,0.0]++"'>mem"  ++ printf "%02.0f"(head mem * 100) ++ "%</span>"
   return (cpuBar ++ "\n" ++ memBar)
 
 batteryConfig :: BarConfig
