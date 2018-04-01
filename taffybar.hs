@@ -6,7 +6,7 @@ import System.Taffybar.Systray                      (systrayNew)
 import System.Taffybar.TaffyPager                   (taffyPagerHUDLegacy,defaultPagerConfig)
 import System.Taffybar.Battery                      (batteryBarNew)
 import System.Taffybar.MPRIS                        (mprisNew,defaultMPRISConfig)
-import System.Taffybar.NetMonitor                   (netMonitorMultiNew)
+import System.Taffybar.NetMonitor                   (netMonitorMultiNewWith)
 import System.Taffybar.Widgets.VerticalBar          (defaultBarConfig,BarConfig(..))
 import System.Taffybar
 import System.Taffybar.Widgets.PollingGraph
@@ -33,9 +33,9 @@ main = do
         ]
         , graphLabel = Just "cpu"
       }
-  let clock = textClockNew Nothing "<span fgcolor='#fff'>%m-%d 星期%u %H:%M</span>" 30
+  let clock = textClockNew Nothing "<span font='9'  size='larger' fgcolor='#fff'>%m月%d日\n周%u %H:%M</span>" 30
       pager = taffyPagerHUDLegacy defaultPagerConfig
-      network = netMonitorMultiNew 2 ["enp4s0f1", "wlp3s0"]
+      network = netMonitorMultiNewWith 1 ["enp4s0f1", "wlp3s0"] 3 "<span font='9' size='larger' fgcolor='#fff'>▼ $inKB$kb/s\n▲ $outKB$kb/s</span>"
       note = notifyAreaNew defaultNotificationConfig
       battery = batteryBarNew batteryConfig 10
       mpris = mprisNew defaultMPRISConfig
@@ -44,5 +44,5 @@ main = do
       tray = systrayNew
   defaultTaffybar defaultTaffybarConfig { startWidgets = [  pager,note ]
                                         , endWidgets = [ tray,network, battery , clock, mem, cpu, mpris ]
-                                        , barHeight     = 18
+                                        , barHeight     = 32
                                         }
