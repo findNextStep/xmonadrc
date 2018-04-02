@@ -1,6 +1,7 @@
 module TheNext.DefalutApp
     (
         terminal,
+        explorer,
         webBrowser,
         launcher
     )where
@@ -13,4 +14,7 @@ launcher = "dmenu_run"
 
 -- | 默认浏览器
 webBrowser::String
-webBrowser = "google-chrome"
+webBrowser = "google-chrome --disable-gpu"
+
+explorer :: String
+explorer = "nautilus --no-desktop"

@@ -39,6 +39,12 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
     -- 启动启动器
     , ((modm                , xK_p          ), spawn APP.launcher)
+
+    -- 启动资源管理器
+    , ((modm                , xK_f          ), spawn APP.explorer)
+
+    -- 启动浏览器
+    , ((modm                , xK_d          ), spawn APP.webBrowser)
     ]
     ++
 
