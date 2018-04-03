@@ -28,8 +28,8 @@ computerInfo = do
   cpu <- getCPULoad "cpu"
   mem <- memCallback
   let
-    cpuBar = "<span font='monospace 10' fgcolor='"++makeColor [head cpu,1.0-head cpu,0.0]++"'>cpu"  ++ printf "%02.0f"(head cpu * 100) ++ "%</span>"
-    memBar = "<span font='monospace 10' fgcolor='"++makeColor [head mem,1.0-head mem,0.0]++"'>mem"  ++ printf "%02.0f"(head mem * 100) ++ "%</span>"
+    cpuBar = "<span font='monospace 9' fgcolor='"++makeColor [head cpu,1.0-head cpu,0.0]++"'>cpu"  ++ printf "%02.0f"(head cpu * 100) ++ "%</span>"
+    memBar = "<span font='monospace 9' fgcolor='"++makeColor [head mem,1.0-head mem,0.0]++"'>mem"  ++ printf "%02.0f"(head mem * 100) ++ "%</span>"
   return (cpuBar ++ "\n" ++ memBar)
 
 batteryConfig :: BarConfig
@@ -42,7 +42,7 @@ main :: IO ()
 main = do
   let clock = textClockNew Nothing "<span font='monospace 9' fgcolor='#fff'>%m月%d日\n周%u %H:%M</span>" 30
       pager = taffyPagerHUDLegacy defaultPagerConfig
-      network = netMonitorMultiNewWith 1 ["enp4s0f1", "wlp3s0"] 2 "<span font='monospace 10' fgcolor='#fff'>▼ $inKB$kb/s\n▲ $outKB$kb/s</span>"
+      network = netMonitorMultiNewWith 1 ["enp4s0f1", "wlp3s0"] 2 "<span font='monospace 10' fgcolor='#fff'>$inKB$kb/s▼\n$outKB$kb/s▲</span>"
       note = notifyAreaNew defaultNotificationConfig
       battery = batteryBarNew batteryConfig 10
       mpris = mprisNew defaultMPRISConfig
@@ -52,6 +52,6 @@ main = do
         return $ Gtk.toWidget l
       tray = systrayNew
   defaultTaffybar defaultTaffybarConfig { startWidgets = [  pager,note ]
-                                        , endWidgets = [ tray,network,battery,clock,info,mpris]
+                                        , endWidgets = [ tray,battery,clock,info,mpris,network]
                                         , barHeight     = 32
                                         }
