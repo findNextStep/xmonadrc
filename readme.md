@@ -12,7 +12,7 @@
 
 ### shell
 
-在`shell`环境下运行`.vscode/buildUp.sh`以编译
+在`shell`环境下运行`script/buildUp.sh`以编译
 
 ## 编译环境
 

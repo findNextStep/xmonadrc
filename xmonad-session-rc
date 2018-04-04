@@ -6,3 +6,7 @@ hsetroot -cover ~/.xmonad/background.jpg
 else 
 hsetroot -solid "#325A8E"
 fi
+
+# 执行键盘按键重映射
+
+xmodmap ~/.xmonad/script/modmap

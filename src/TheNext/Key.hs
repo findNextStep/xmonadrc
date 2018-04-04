@@ -21,14 +21,19 @@ import Graphics.X11.Xlib
 
 
 -- | 可以通过xmodmap确定按键绑定
--- | 在我的电脑上左右alt都是mod1
-altMask = mod1Mask
+leftAltMask = mod1Mask
+rightAltMask = mod3Mask
 superMask = mod4Mask
+ctrlMask = controlMask
 
--- | 默认关键键位，设置为super键
+
+
+-- | 默认关键键位，设置为super键和右alt
 defaultModMask :: KeyMask
-defaultModMask = mod4Mask
+defaultModMask =  superMask
 
+switchTouchPad :: X()
+switchTouchPad = spawn "id=$(xinput --list | grep Touch | awk -F\"=\" '{print $2}' | awk '{print $1}')\nxinput --list-props $id| grep Enable | grep 0 && xinput enable $id|| xinput disable $id"
 
 keys:: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
@@ -37,8 +42,10 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- 启动一个终端
     [ ((modm                , xK_Return     ), spawn APP.terminal)
 
-    -- 启动启动器
+    -- 启动启动
     , ((modm                , xK_p          ), spawn APP.launcher)
+    , ((mod3Mask                , xK_p          ), spawn APP.launcher)
+    
 
     -- 启动资源管理器
     , ((modm                , xK_f          ), spawn APP.explorer)
@@ -46,6 +53,12 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- 启动浏览器
     , ((modm                , xK_d          ), spawn APP.webBrowser)
     ]
+
+    ++ 
+    -- 控制触摸板启动或者关闭
+    [ ((modm                , xK_F1         ), switchTouchPad)
+    ]
+
     ++
 
     -- 关闭程序

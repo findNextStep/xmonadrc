@@ -4,7 +4,7 @@
         {
             "label": "setup",
             "type": "shell",
-            "command": "sh ${workspaceRoot}/.vscode/buildUp.sh",
+            "command": "sh ${workspaceRoot}/script/buildUp.sh",
             "group": {
                 "kind": "build",
                 "isDefault": true
