@@ -30,7 +30,7 @@ ctrlMask = controlMask
 
 -- | 默认关键键位，设置为super键和右alt
 defaultModMask :: KeyMask
-defaultModMask =  superMask
+defaultModMask =  rightAltMask
 
 switchTouchPad :: X()
 switchTouchPad = spawn "id=$(xinput --list | grep Touch | awk -F\"=\" '{print $2}' | awk '{print $1}')\nxinput --list-props $id| grep Enable | grep 0 && xinput enable $id|| xinput disable $id"
@@ -44,7 +44,6 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
     -- 启动启动
     , ((modm                , xK_p          ), spawn APP.launcher)
-    , ((mod3Mask                , xK_p          ), spawn APP.launcher)
     
 
     -- 启动资源管理器
@@ -56,13 +55,14 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
     ++ 
     -- 控制触摸板启动或者关闭
-    [ ((modm                , xK_F1         ), switchTouchPad)
+    [ ((superMask           , xK_F1         ), switchTouchPad)
     ]
 
     ++
 
     -- 关闭程序
     [ ((modm .|. shiftMask  , xK_c          ), OP.kill)
+    , ((leftAltMask         , xK_F12        ), OP.kill)
 
     -- 下一个布局算法
     , ((modm                , xK_space      ), OP.sendMessage NextLayout)
@@ -119,33 +119,33 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
     -- | 音量控制
     -- | 音量增加
-    [((modm               , xK_F5    ), spawn $ "pactl set-sink-volume 0 -" ++ Param.volumeInterval ++ "%")
+    [((superMask          , xK_F5    ), spawn $ "pactl set-sink-volume 0 -" ++ Param.volumeInterval ++ "%")
     -- | 音量减少
-    ,((modm               , xK_F6    ), spawn $ "pactl set-sink-volume 0 +" ++ Param.volumeInterval ++ "%")
+    ,((superMask          , xK_F6    ), spawn $ "pactl set-sink-volume 0 +" ++ Param.volumeInterval ++ "%")
     -- | 立即静音
-    ,((modm               , xK_F3    ), spawn "pactl set-sink-mute 0 toggle")
+    ,((superMask          , xK_F3    ), spawn "pactl set-sink-volume 0 0")
 
     ]
     ++
     -- 工作区切换
-    [((m .|. modm, k), OP.windows $ f i)
+    [((m .|. superMask, k), OP.windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
     ++
     -- 多屏幕控制
-    [((m .|. modm, key), OP.screenWorkspace sc >>= flip whenJust (OP.windows . f))
+    [((m .|. superMask, key), OP.screenWorkspace sc >>= flip whenJust (OP.windows . f))
         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 mouseBindings :: XConfig Layout -> M.Map (KeyMask, Button) (Window -> X ())
 mouseBindings XConfig {XMonad.modMask = modMask} = M.fromList
     -- mod-button1 %! Set the window to floating mode and move by dragging
-    [ ((modMask, button1), \w -> OP.focus w >> OP.mouseMoveWindow w
+    [ ((superMask, button1), \w -> OP.focus w >> OP.mouseMoveWindow w
                                             >> OP.windows W.shiftMaster)
     -- mod-button2 %! Raise the window to the top of the stack
-    , ((modMask, button2), OP.windows . (W.shiftMaster .) . W.focusWindow)
+    , ((superMask, button2), OP.windows . (W.shiftMaster .) . W.focusWindow)
     -- mod-button3 %! Set the window to floating mode and resize by dragging
-    , ((modMask, button3), \w -> OP.focus w >> OP.mouseResizeWindow w
+    , ((superMask, button3), \w -> OP.focus w >> OP.mouseResizeWindow w
                                             >> OP.windows W.shiftMaster)
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
