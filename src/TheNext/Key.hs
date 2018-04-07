@@ -11,6 +11,8 @@ import qualified XMonad.Core        as XMonad           (workspaces,layoutHook,m
 import Data.Bits                                        ((.|.),(.&.))
 import System.Exit                                      (exitSuccess)
 import XMonad.Hooks.ManageDocks                         (ToggleStruts(..))
+import XMonad.Prompt
+import XMonad.Prompt.ConfirmPrompt
 import qualified XMonad.Operations  as OP
 import qualified XMonad.StackSet    as W
 import qualified Data.Map           as M
@@ -40,17 +42,17 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
     -- 启动app
     -- 启动一个终端
-    [ ((modm                , xK_Return     ), spawn APP.terminal)
+    [ ((superMask           , xK_Return     ), spawn APP.terminal)
 
-    -- 启动启动
-    , ((modm                , xK_p          ), spawn APP.launcher)
+    -- 启动启动器
+    , ((superMask           , xK_p          ), spawn APP.launcher)
     
 
     -- 启动资源管理器
-    , ((modm                , xK_f          ), spawn APP.explorer)
+    , ((superMask           , xK_f          ), spawn APP.explorer)
 
     -- 启动浏览器
-    , ((modm                , xK_d          ), spawn APP.webBrowser)
+    , ((superMask           , xK_d          ), spawn APP.webBrowser)
     ]
 
     ++ 
@@ -61,8 +63,8 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     ++
 
     -- 关闭程序
-    [ ((modm .|. shiftMask  , xK_c          ), OP.kill)
-    , ((leftAltMask         , xK_F12        ), OP.kill)
+    [ ((modm                , xK_c          ), OP.kill)
+    , ((leftAltMask         , xK_F4         ), OP.kill)
 
     -- 下一个布局算法
     , ((modm                , xK_space      ), OP.sendMessage NextLayout)
@@ -113,7 +115,7 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     , ((modm                , xK_q          ), spawn "pkill taffybar;xmonad --recompile && xmonad --restart")
 
     -- 退出xmonad
-    ,((modm .|. shiftMask   , xK_q          ),  io exitSuccess)
+    ,((modm .|. shiftMask   , xK_q          ), confirmPrompt defaultXPConfig "quit" $ io exitSuccess)
     ]
     ++
 

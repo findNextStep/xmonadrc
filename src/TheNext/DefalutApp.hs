@@ -7,7 +7,7 @@ module TheNext.DefalutApp
     )where
 
 terminal::String
-terminal = "urxvt"
+terminal = "gnome-terminal"
 
 launcher::String
 launcher = "dmenu_run"
