@@ -12,6 +12,13 @@ import System.Taffybar.Widgets.PollingLabel         (pollingLabelNew)
 import Text.Printf                                  (printf)
 import qualified Graphics.UI.Gtk as Gtk
 import System.Taffybar
+import System.Process (readProcess)
+
+getVolume :: IO String
+getVolume = do
+  cmd <- readProcess "pactl" ["list","sinks"] [] 
+  return $ words (lines cmd !! 9) !! 3
+
 memCallback :: IO [Double]
 memCallback = do
   mi <- parseMeminfo
@@ -50,8 +57,12 @@ main = do
         l <- pollingLabelNew "233" 1 computerInfo
         Gtk.widgetShowAll l
         return $ Gtk.toWidget l
+      volume = do
+        l <- pollingLabelNew "???" 1 getVolume
+        Gtk.widgetShowAll l
+        return $ Gtk.toWidget l 
       tray = systrayNew
   defaultTaffybar defaultTaffybarConfig { startWidgets = [  pager,note ]
-                                        , endWidgets = [ tray,battery,clock,info,mpris,network]
+                                        , endWidgets = [ tray,battery,clock,info,mpris,volume,network]
                                         , barHeight     = 32
                                         }

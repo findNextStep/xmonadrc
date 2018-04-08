@@ -35,4 +35,4 @@ library
 -- 测试bar能否编译
 executable theNexttaffybar
   main-is: taffybar.hs
-  build-depends: base, taffybar, gtk
+  build-depends: base, taffybar, gtk,process
