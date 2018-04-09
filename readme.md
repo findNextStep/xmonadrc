@@ -38,6 +38,9 @@ hsetroot 1.0.2 - yet another wallpaper application
 xcompmgr v1.1.7
 
 > taffybar -v 0.4.5
+
+> shutter --version
+0.93.1 Rev.1278
 ```
 
 ## 桌面背景

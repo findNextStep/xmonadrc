@@ -56,6 +56,9 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
     -- 锁定屏幕
     , ((superMask           , xK_l          ), spawn APP.screenLock)
+
+    -- 屏幕截图
+    , ((ctrlMask .|. leftAltMask,xK_a       ), spawn APP.screenShutter)
     ]
 
     ++ 

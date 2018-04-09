@@ -4,6 +4,7 @@ module TheNext.DefalutApp
         explorer,
         webBrowser,
         screenLock,
+        screenShutter,
         launcher
     )where
 
@@ -23,3 +24,7 @@ explorer = "nautilus --no-desktop"
 -- | 默认锁屏程序 
 screenLock :: String
 screenLock = "gnome-screensaver-command -l"
+
+-- | 默认截图工具
+screenShutter :: String
+screenShutter = "shutter -s"
