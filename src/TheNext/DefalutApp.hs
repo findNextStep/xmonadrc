@@ -3,6 +3,7 @@ module TheNext.DefalutApp
         terminal,
         explorer,
         webBrowser,
+        screenLock,
         launcher
     )where
 
@@ -18,3 +19,7 @@ webBrowser = "google-chrome --disable-gpu"
 
 explorer :: String
 explorer = "nautilus --no-desktop"
+
+-- | 默认锁屏程序 
+screenLock :: String
+screenLock = "gnome-screensaver-command -l"

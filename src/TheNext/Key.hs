@@ -53,6 +53,9 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
     -- 启动浏览器
     , ((superMask           , xK_d          ), spawn APP.webBrowser)
+
+    -- 锁定屏幕
+    , ((superMask           , xK_l          ), spawn APP.screenLock)
     ]
 
     ++ 
