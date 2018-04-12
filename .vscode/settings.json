@@ -8,6 +8,7 @@
         "**/.DS_Store": true,
         "*.hi":true,
         "*.o":true,
-        "xmonad-x86_64-linux":true
+        "xmonad-x86_64-linux":true,
+        "dist":true
     }
 }
