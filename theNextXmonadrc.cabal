@@ -22,7 +22,7 @@ library
                        TheNext.Hook
                        TheNext.Param
                        TheNext.Layout
-                       TheNext.Bar.Unit
+                      --  TheNext.Bar.Unit
   build-depends:       base >=4.8 && <4.9,
                        xmonad,
                        data-default,

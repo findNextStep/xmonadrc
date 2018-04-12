@@ -3,14 +3,15 @@ import System.Information.Memory                    (parseMeminfo,memoryUsedRati
 import System.Taffybar.FreedesktopNotifications     (notifyAreaNew,defaultNotificationConfig)
 import System.Taffybar.SimpleClock                  (textClockNew)
 import System.Taffybar.Systray                      (systrayNew)
-import System.Taffybar.TaffyPager                   (taffyPagerHUDLegacy,defaultPagerConfig)
+import System.Taffybar.TaffyPager
+import System.Taffybar.WorkspaceHUD
 import System.Taffybar.Battery                      (batteryBarNew)
 import System.Taffybar.MPRIS                        (mprisNew,defaultMPRISConfig)
 import System.Taffybar.NetMonitor                   (netMonitorMultiNewWith)
 import System.Taffybar.Widgets.VerticalBar          (defaultBarConfig,BarConfig(..))
 import System.Taffybar.Widgets.PollingLabel         (pollingLabelNew) 
 import Text.Printf                                  (printf)
-import qualified Graphics.UI.Gtk as Gtk
+-- import qualified Graphics.UI.Gtk as Gtk
 import System.Taffybar
 import System.Process (readProcess)
 
@@ -48,21 +49,21 @@ batteryConfig =
 main :: IO ()
 main = do
   let clock = textClockNew Nothing "<span font='monospace 9' fgcolor='#fff'>%m月%d日\n周%u %H:%M</span>" 30
-      pager = taffyPagerHUDLegacy defaultPagerConfig
+      pager = taffyPagerHUDNew defaultPagerConfig defaultWorkspaceHUDConfig
       network = netMonitorMultiNewWith 1 ["enp4s0f1", "wlp3s0"] 2 "<span font='monospace 10' fgcolor='#fff'>$inKB$kb/s▼\n$outKB$kb/s▲</span>"
       note = notifyAreaNew defaultNotificationConfig
       battery = batteryBarNew batteryConfig 10
       mpris = mprisNew defaultMPRISConfig
-      info = do
-        l <- pollingLabelNew "233" 1 computerInfo
-        Gtk.widgetShowAll l
-        return $ Gtk.toWidget l
-      volume = do
-        l <- pollingLabelNew "???" 1 getVolume
-        Gtk.widgetShowAll l
-        return $ Gtk.toWidget l 
+      -- info = do
+      --   l <- pollingLabelNew "233" 1 computerInfo
+      --   Gtk.widgetShowAll l
+      --   return $ Gtk.toWidget l
+      -- volume = do
+      --   l <- pollingLabelNew "???" 1 getVolume
+      --   Gtk.widgetShowAll l
+      --   return $ Gtk.toWidget l 
       tray = systrayNew
   defaultTaffybar defaultTaffybarConfig { startWidgets = [  pager,note ]
-                                        , endWidgets = [ tray,battery,clock,info,mpris,volume,network]
+                                        , endWidgets = [ tray,battery,clock,mpris,network]
                                         , barHeight     = 32
                                         }

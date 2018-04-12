@@ -9,7 +9,7 @@ import DBus.Client                      (connectSession)
 main = do
     client <- connectSession
     -- | 设置窗口透明和切换特效
-    xmproc <- spawnPipe "xcompmgr -Ss -n -Cc -fF -I-10 -O-10 -D1 -t-3 -l-4 -r4&"
+    xmproc <- spawnPipe "xcompmgr -Ff"
     -- | 启动taffybar
     xmproc <- spawnPipe "taffybar"
     xmonad $ docks $ ewmh $ pagerHints defaults

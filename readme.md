@@ -41,6 +41,12 @@ xcompmgr v1.1.7
 
 > shutter --version
 0.93.1 Rev.1278
+
+> numlockx --help
+NumLockX 1.2
+(C) 2000-2001 Lubos Lunak <l.lunak@kde.org>
+(C) 2001      Oswald Buddenhagen <ossi@kde.org>
+
 ```
 
 ## 桌面背景

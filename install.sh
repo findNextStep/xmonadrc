@@ -1,1 +1,1 @@
-apt install xmonad cabal dmenu feh taffybar hsetroot xcompmgr
+apt install xmonad cabal dmenu feh taffybar hsetroot xcompmgr numlockx libgtk-3-dev
