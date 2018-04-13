@@ -23,8 +23,7 @@ unitBase content = do
     return $ Gtk.toWidget l
 
 pager = taffyPagerNew defaultPagerConfig
-                            { --Pager.useImages               = True
-                            Pager.activeWindow            = Pager.escape
+                            { Pager.activeWindow            = Pager.escape
                             , Pager.widgetSep               = "|" 
                             }
 
