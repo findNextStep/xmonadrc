@@ -2,22 +2,19 @@ import System.Information.CPU2                      (getCPULoad)
 import System.Information.Memory                    (parseMeminfo,memoryUsedRatio)
 import System.Taffybar.FreedesktopNotifications     (notifyAreaNew,defaultNotificationConfig)
 import System.Taffybar.SimpleClock                  (textClockNew)
-import System.Taffybar.Systray                      (systrayNew)
-import System.Taffybar.TaffyPager
-import System.Taffybar.WorkspaceHUD
 import System.Taffybar.Battery                      (batteryBarNew)
 import System.Taffybar.MPRIS                        (mprisNew,defaultMPRISConfig)
-import System.Taffybar.NetMonitor                   (netMonitorMultiNewWith)
+import System.Taffybar.NetMonitor                   (netMonitorNewWith)
 import System.Taffybar.Widgets.VerticalBar          (defaultBarConfig,BarConfig(..))
-import System.Taffybar.Widgets.PollingLabel         (pollingLabelNew) 
 import Text.Printf                                  (printf)
--- import qualified Graphics.UI.Gtk as Gtk
-import System.Taffybar
-import System.Process (readProcess)
+import System.Process                               (readProcess)
+import System.Taffybar.Systray                      (systrayNew)
+import TheNext.Bar.Unit                             (unitBase,pager)
+import System.Taffybar       as Taffybar
 
 getVolume :: IO String
 getVolume = do
-  cmd <- readProcess "pactl" ["list","sinks"] [] 
+  cmd <- readProcess "pactl" ["list","sinks"] []
   return $ words (lines cmd !! 9) !! 3
 
 memCallback :: IO [Double]
@@ -26,7 +23,7 @@ memCallback = do
   return [memoryUsedRatio mi]
 
 toInt :: Double -> Int
-toInt = round 
+toInt = round
 
 makeColor :: [Double]-> String
 makeColor color = printf "#%02x%02x%02x" (toInt(head color * 255)) (toInt(color!!1 * 255)) (toInt(last color * 255))
@@ -48,22 +45,18 @@ batteryConfig =
 
 main :: IO ()
 main = do
-  let clock = textClockNew Nothing "<span font='monospace 9' fgcolor='#fff'>%m月%d日\n周%u %H:%M</span>" 30
-      pager = taffyPagerHUDNew defaultPagerConfig defaultWorkspaceHUDConfig
-      network = netMonitorMultiNewWith 1 ["enp4s0f1", "wlp3s0"] 2 "<span font='monospace 10' fgcolor='#fff'>$inKB$kb/s▼\n$outKB$kb/s▲</span>"
+  let clock = textClockNew Nothing "<span font='monospace 9' fgcolor='#fff'>%m-%d %u\n%H:%M 周</span>" 30
+      networkWire = netMonitorNewWith 1 "wlp3s0" 2 "<span font='monospace 10' fgcolor='#fff'>$inKB$kb/s▼\n$outKB$kb/s▲</span>"
       note = notifyAreaNew defaultNotificationConfig
       battery = batteryBarNew batteryConfig 10
       mpris = mprisNew defaultMPRISConfig
-      -- info = do
-      --   l <- pollingLabelNew "233" 1 computerInfo
-      --   Gtk.widgetShowAll l
-      --   return $ Gtk.toWidget l
-      -- volume = do
-      --   l <- pollingLabelNew "???" 1 getVolume
-      --   Gtk.widgetShowAll l
-      --   return $ Gtk.toWidget l 
+      info = unitBase computerInfo
+      volume = unitBase getVolume
       tray = systrayNew
-  defaultTaffybar defaultTaffybarConfig { startWidgets = [  pager,note ]
-                                        , endWidgets = [ tray,battery,clock,mpris,network]
-                                        , barHeight     = 32
-                                        }
+  Taffybar.taffybarMain Taffybar.defaultTaffybarConfig
+                                    { Taffybar.barHeight     = 28
+                                    , Taffybar.monitorNumber = 0
+                                    , Taffybar.startWidgets  = [pager,note]
+                                    , Taffybar.endWidgets    = [tray,battery,clock,mpris,info,volume,networkWire]
+                                    , Taffybar.widgetSpacing = 5
+                                    }

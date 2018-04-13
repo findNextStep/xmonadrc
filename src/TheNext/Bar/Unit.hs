@@ -1,11 +1,15 @@
 module TheNext.Bar.Unit (
     addConfig,
+    pager,
     unitBase
 ) where
 
 import qualified Graphics.UI.Gtk as Gtk
 import System.Taffybar.Widgets.PollingLabel         (pollingLabelNew) 
 import Text.Printf                                  (printf)
+import Graphics.UI.Gtk.Misc.TrayManager
+import System.Taffybar.TaffyPager                   (defaultPagerConfig,taffyPagerNew)
+import System.Taffybar.Pager as Pager
 
 data UnitConfig = UnitConfig{ fontColor :: IO (Int,Int,Int)
                             , fontSize :: IO Int
@@ -16,8 +20,13 @@ unitBase :: IO String -> IO Gtk.Widget
 unitBase content = do 
     l <- pollingLabelNew "waitForInit" 1 content
     Gtk.widgetShowAll l
-    return $ Gtk.toWidget l 
+    return $ Gtk.toWidget l
 
+pager = taffyPagerNew defaultPagerConfig
+                            { --Pager.useImages               = True
+                            Pager.activeWindow            = Pager.escape
+                            , Pager.widgetSep               = "|" 
+                            }
 
 addConfig :: IO String -> (IO String -> IO UnitConfig) -> IO String
 addConfig content configFun = do
