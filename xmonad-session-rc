@@ -10,5 +10,8 @@ fi
 # 执行键盘按键重映射
 xmodmap ~/.xmonad/script/modmap
 
+# indicator-cpufreq
+indicator-cpufreq&
+
 # 开启小键盘
 numlockx on

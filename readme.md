@@ -37,7 +37,9 @@ hsetroot 1.0.2 - yet another wallpaper application
 > xcompmgr --version
 xcompmgr v1.1.7
 
-> taffybar -v 0.4.5
+> taffybar -v 0.4.6
+
+> indicator-cpufreq
 
 > shutter --version
 0.93.1 Rev.1278
