@@ -13,5 +13,8 @@ xmodmap ~/.xmonad/script/modmap
 # indicator-cpufreq
 indicator-cpufreq&
 
+# 坚果云同步
+python2 ~/.nutstore/dist/bin/nutstore-pydaemon.py&
+
 # 开启小键盘
 numlockx on
