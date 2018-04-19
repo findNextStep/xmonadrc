@@ -11,6 +11,7 @@ import System.Process                               (readProcess)
 import System.Taffybar.Systray                      (systrayNew)
 import TheNext.Bar.Unit                             (unitBase,pager)
 import System.Taffybar       as Taffybar
+import System.Taffybar.Menu.MenuWidget
 
 getVolume :: IO String
 getVolume = do
@@ -53,10 +54,11 @@ main = do
       info = unitBase computerInfo
       volume = unitBase getVolume
       tray = systrayNew
+      menu = menuWidgetNew $ Just "PREFIX-"
   Taffybar.taffybarMain Taffybar.defaultTaffybarConfig
                                     { Taffybar.barHeight     = 28
                                     , Taffybar.monitorNumber = 0
                                     , Taffybar.startWidgets  = [pager,note]
-                                    , Taffybar.endWidgets    = [tray,battery,clock,mpris,info,volume,networkWire]
+                                    , Taffybar.endWidgets    = [tray,battery,clock,mpris,info,volume,networkWire,menu]
                                     , Taffybar.widgetSpacing = 5
                                     }
