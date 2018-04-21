@@ -38,7 +38,7 @@
 	background-color: @urgent-window-color;
 }
 
-/* .IconContainer.Minimized .IconImage {
+.IconContainer.Minimized .IconImage {
 	transition: opacity .5s;
 	opacity: .3;
 }
@@ -47,7 +47,7 @@
 	transition: opacity .5s;
 	padding: 0px;
 	opacity: 1;
-} */
+}
 
 #WindowSwitcher {
 	background-color: @bg-color;
