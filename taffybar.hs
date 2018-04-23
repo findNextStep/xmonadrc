@@ -4,12 +4,12 @@ import System.Taffybar.FreedesktopNotifications     (notifyAreaNew,defaultNotifi
 import System.Taffybar.SimpleClock                  (textClockNew)
 import System.Taffybar.Battery                      (batteryBarNew)
 import System.Taffybar.MPRIS                        (mprisNew,defaultMPRISConfig)
-import System.Taffybar.NetMonitor                   (netMonitorNewWith)
 import System.Taffybar.Widgets.VerticalBar          (defaultBarConfig,BarConfig(..))
 import Text.Printf                                  (printf)
 import System.Process                               (readProcess)
 import System.Taffybar.Systray                      (systrayNew)
 import TheNext.Bar.Unit                             (unitBase,pager)
+import TheNext.Bar.AutoNetMonitor                   (autoNetMonitorWithout)
 import System.Taffybar       as Taffybar
 import System.Taffybar.Menu.MenuWidget
 
@@ -47,7 +47,7 @@ batteryConfig =
 main :: IO ()
 main = do
   let clock = textClockNew Nothing "<span font='monospace 9' fgcolor='#fff'>%m-%d %u\n%H:%M 周</span>" 30
-      networkWire = netMonitorNewWith 1 "wlp3s0" 2 "<span font='monospace 10' fgcolor='#fff'>$inKB$kb/s▼\n$outKB$kb/s▲</span>"
+      networkWire = autoNetMonitorWithout ["lo"]
       note = notifyAreaNew defaultNotificationConfig
       battery = batteryBarNew batteryConfig 10
       mpris = mprisNew defaultMPRISConfig

@@ -21,11 +21,13 @@ library
                        TheNext.Param
                        TheNext.Layout
                        TheNext.Bar.Unit
+                       TheNext.Bar.AutoNetMonitor
   build-depends:       base >=4.8 && <4.9,
                        xmonad,
                        data-default,
                        gtk-traymanager,
                        containers,
+                       process,
                        taffybar == 0.5.0,
                        xmonad-contrib,
                        gtk,
