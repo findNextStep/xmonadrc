@@ -9,7 +9,6 @@ import System.Taffybar.Systray                      (systrayNew)
 import TheNext.Bar.Unit                             (unitBase,pager)
 import TheNext.Bar.AutoNetMonitor                   (autoNetMonitorWithout)
 import System.Taffybar       as Taffybar
-import System.Taffybar.Menu.MenuWidget
 import TheNext.Bar.ShowPower
 
 getVolume :: IO String
@@ -39,7 +38,7 @@ computerInfo = do
 
 main :: IO ()
 main = do
-  let clock = textClockNew Nothing "<span font='monospace 9' fgcolor='#fff'>%m-%d %u\n%H:%M 周</span>" 30
+  let clock = textClockNew Nothing "<span font='monospace 9' fgcolor='#fff'>%m-%d 周\n%H:%M %u</span>" 30
       networkWire = autoNetMonitorWithout ["lo"]
       note = notifyAreaNew defaultNotificationConfig
       battery = powerUnit
@@ -47,11 +46,10 @@ main = do
       info = unitBase computerInfo
       volume = unitBase getVolume
       tray = systrayNew
-      menu = menuWidgetNew $ Just "PREFIX-"
   Taffybar.taffybarMain Taffybar.defaultTaffybarConfig
                                     { Taffybar.barHeight     = 28
                                     , Taffybar.monitorNumber = 0
                                     , Taffybar.startWidgets  = [pager,note]
-                                    , Taffybar.endWidgets    = [tray,battery,clock,mpris,info,volume,networkWire,menu]
+                                    , Taffybar.endWidgets    = [tray,battery,clock,mpris,info,volume,networkWire]
                                     , Taffybar.widgetSpacing = 5
                                     }
