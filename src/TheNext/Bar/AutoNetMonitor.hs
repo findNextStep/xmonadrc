@@ -20,9 +20,7 @@ lsFile path = do
 
 -- | 获取所有网络设备的总网络用量的和
 autoNetMonitor :: IO Gtk.Widget
-autoNetMonitor = do
-    device <- lsFile "/sys/class/net"
-    netMonitorMultiNewWith 0.5 device 2 netInfo
+autoNetMonitor = autoNetMonitorWithout []
 
 -- | 获取除了设置的参数以外所有网络设备的网络用量总和
 -- 设备名称可以通过`nmcli d`命令获取

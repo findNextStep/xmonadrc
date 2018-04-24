@@ -21,11 +21,16 @@ library
                        TheNext.Param
                        TheNext.Layout
                        TheNext.Bar.Unit
+                       TheNext.Bar.ShowPower
+                       TheNext.Bar.Taffybar.Widgets.VerticalBar
+                       TheNext.Bar.Taffybar.Widgets.PollingBar
                        TheNext.Bar.AutoNetMonitor
   build-depends:       base >=4.8 && <4.9,
                        xmonad,
                        data-default,
                        gtk-traymanager,
+                       enclosed-exceptions >= 1.0.0.1,
+                       cairo,
                        containers,
                        process,
                        taffybar == 0.5.0,
