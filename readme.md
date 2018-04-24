@@ -2,8 +2,6 @@
 
 ## 安装
 
-如果需要网速显示，需要通过`nmcli d`确认网络设备列表并写入`taffybar`的设置之中
-
 ### vscode 
 
 只需要将预先设定在`.vscode`文件夹下的`task`启动即可(使用`ctrl+shift+b`)
