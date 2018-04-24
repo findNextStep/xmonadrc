@@ -2,7 +2,6 @@ import System.Information.CPU2                      (getCPULoad)
 import System.Information.Memory                    (parseMeminfo,memoryUsedRatio)
 import System.Taffybar.FreedesktopNotifications     (notifyAreaNew,defaultNotificationConfig)
 import System.Taffybar.SimpleClock                  (textClockNew)
-import System.Taffybar.MPRIS                        (mprisNew,defaultMPRISConfig)
 import Text.Printf                                  (printf)
 import System.Process                               (readProcess)
 import System.Taffybar.Systray                      (systrayNew)
@@ -42,7 +41,6 @@ main = do
       networkWire = autoNetMonitorWithout ["lo"]
       note = notifyAreaNew defaultNotificationConfig
       battery = powerUnit
-      mpris = mprisNew defaultMPRISConfig
       info = unitBase computerInfo
       volume = unitBase getVolume
       tray = systrayNew
@@ -50,6 +48,6 @@ main = do
                                     { Taffybar.barHeight     = 28
                                     , Taffybar.monitorNumber = 0
                                     , Taffybar.startWidgets  = [pager,note]
-                                    , Taffybar.endWidgets    = [tray,battery,clock,mpris,info,volume,networkWire]
+                                    , Taffybar.endWidgets    = [tray,battery,clock,info,volume,networkWire]
                                     , Taffybar.widgetSpacing = 5
                                     }
