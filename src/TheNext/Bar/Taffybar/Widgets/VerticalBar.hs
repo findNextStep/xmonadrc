@@ -166,7 +166,7 @@ verticalBarNew cfg = do
                                  }
   case barDirection cfg of
     VERTICAL    -> widgetSetSizeRequest drawArea (barWidth cfg) (-1)
-    HORIZONTAL  -> widgetSetSizeRequest drawArea 63 (barWidth cfg)
+    HORIZONTAL  -> widgetSetSizeRequest drawArea (-1) (barWidth cfg)
   _ <- on drawArea exposeEvent $ tryEvent $ C.liftIO (drawBar mv drawArea)
 
   box <- hBoxNew False 1

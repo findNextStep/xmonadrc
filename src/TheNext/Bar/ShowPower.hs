@@ -40,11 +40,11 @@ batteryConfig = BarConfig { barBorderColor = (0.5, 0.5, 0.5)
         colorFunc pct = (1-pct,pct,0)
 
 powerShower :: IO Widget
-powerShower = pollingBarNew batteryConfig 2  $ powerGetter "BAT0" 
+powerShower = do
+    pollingBarNew batteryConfig 2  $ powerGetter "BAT0" 
 
 powerText :: IO Widget
-powerText = do
-    unitBase pow
+powerText = unitBase pow
     where
         pow = do
             power <- powerGetter "BAT0" 
@@ -56,14 +56,12 @@ powerText = do
 powerUnit :: IO Widget
 powerUnit = do
     vbox <- vBoxNew False 0
+    power <- powerShower
+    boxPackStart vbox power PackNatural 0
+    text  <- powerText
+    boxPackStart vbox text  PackNatural 0
     _ <- forkIO $ forever $ do
-        power <- powerShower
-        text  <- powerText
-        boxPackStart vbox power PackNatural 0
-        boxPackStart vbox text  PackNatural 0
         widgetShowAll vbox
         threadDelay $ floor (1 * 1000000)
-    return ()
-    -- show <- powerShower
-    -- text <- powerText
+    widgetShowAll vbox
     return $ toWidget vbox
