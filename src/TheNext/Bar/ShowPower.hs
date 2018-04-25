@@ -40,8 +40,7 @@ batteryConfig = BarConfig { barBorderColor = (0.5, 0.5, 0.5)
         colorFunc pct = (1-pct,pct,0)
 
 powerShower :: IO Widget
-powerShower = do
-    pollingBarNew batteryConfig 2  $ powerGetter "BAT0" 
+powerShower = pollingBarNew batteryConfig 2  $ powerGetter "BAT0" 
 
 powerText :: IO Widget
 powerText = unitBase pow
