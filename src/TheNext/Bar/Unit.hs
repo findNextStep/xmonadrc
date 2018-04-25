@@ -1,16 +1,21 @@
 module TheNext.Bar.Unit (
     addConfig,
-    pager,
+    title,
+    workspace,
     unitBase
 ) where
 
 import qualified Graphics.UI.Gtk as Gtk
+import Graphics.UI.Gtk.Abstract.Container           (containerRemove,containerAdd)
 import System.Taffybar.Widgets.PollingLabel         (pollingLabelNew)
 import Text.Printf                                  (printf)
 import Graphics.UI.Gtk.Misc.TrayManager
-import System.Taffybar.TaffyPager
+import System.Taffybar.WindowSwitcher
 import System.Taffybar.WorkspaceHUD
-import System.Taffybar.Pager as Pager
+import System.Taffybar.WorkspaceSwitcher
+import System.Taffybar.Pager
+import Control.Concurrent
+import Control.Monad ( forever )
 
 data UnitConfig = UnitConfig{ fontColor :: IO (Int,Int,Int)
                             , fontSize :: IO Int
@@ -23,43 +28,33 @@ unitBase content = do
     Gtk.widgetShowAll l
     return $ Gtk.toWidget l
 
-pager = taffyPagerHUDNew (defaultPagerConfig
-    { activeWindow            = escape
-    , activeLayout            = escape
-    , activeWorkspace         = colorize "yellow" "" . wrap "[" "]" . escape
-    , hiddenWorkspace         = escape
-    , emptyWorkspace          = const ""
-    , visibleWorkspace        = wrap "(" ")" . escape
-    , urgentWorkspace         = colorize "red" "yellow" . escape
-    , widgetSep               = "|"
-    , workspaceBorder         = False
-    , workspaceGap            = 0
-    , workspacePad            = False
-    , useImages               = True
-    , imageSize               = 16
-    , fillEmptyImages         = True
-    })$ defaultWorkspaceHUDConfig
-    { widgetBuilder = buildUnderlineButtonController
-    , widgetGap = 0
-    , windowIconSize = 16
-    , underlineHeight = 4
-    , minWSWidgetSize = Just 30
-    , underlinePadding = 1
-    , maxIcons = Just 4
-    , minIcons = 0
-    , getIconInfo = defaultGetIconInfo
-    , labelSetter = return . workspaceName
-    , updateIconsOnTitleChange = True
-    , updateOnWMIconChange = False
-    , showWorkspaceFn = hideEmpty
-    , borderWidth = 0
-    , updateRateLimitMicroseconds = 100000
-    , debugMode = False
-    , redrawIconsOnStateChange = False
-    , urgentWorkspaceState = False
-    , innerPadding = 0
-    , outerPadding = 0
-    }
+reFlashUnit :: IO Gtk.Widget -> IO Gtk.Widget
+reFlashUnit get = do
+    vbox <- Gtk.vBoxNew False 0
+    wi <- get
+    containerAdd vbox wi
+    _ <- forkIO $ forever $ do
+        containerRemove vbox wi
+        wi <- get
+        containerAdd vbox wi
+        -- Gtk.widgetShowAll vbox
+        threadDelay $ floor (1 * 1000000)
+    Gtk.widgetShowAll vbox
+    return $ Gtk.toWidget vbox
+
+workspace = workspaceIn
+
+title =  do
+    pagers <- pagerNew defaultPagerConfig
+    windowSwitcherNew pagers
+
+workspaceIn =  do
+    pagers <- pagerNew defaultPagerConfig
+        { workspaceBorder           = False
+        -- , useImages                 = True
+        -- , fillEmptyImages           = True
+        }
+    wspaceSwitcherNew pagers
 
 addConfig :: IO String -> (IO String -> IO UnitConfig) -> IO String
 addConfig content configFun = do

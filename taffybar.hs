@@ -5,9 +5,9 @@ import System.Taffybar.SimpleClock                  (textClockNew)
 import Text.Printf                                  (printf)
 import System.Process                               (readProcess)
 import System.Taffybar.Systray                      (systrayNew)
-import TheNext.Bar.Unit                             (unitBase,pager)
 import TheNext.Bar.AutoNetMonitor                   (autoNetMonitorWithout)
 import System.Taffybar       as Taffybar
+import TheNext.Bar.Unit
 import TheNext.Bar.ShowPower
 
 getVolume :: IO String
@@ -47,7 +47,7 @@ main = do
   Taffybar.taffybarMain Taffybar.defaultTaffybarConfig
                                     { Taffybar.barHeight     = 28
                                     , Taffybar.monitorNumber = 0
-                                    , Taffybar.startWidgets  = [pager,note]
+                                    , Taffybar.startWidgets  = [workspace,title,note]
                                     , Taffybar.endWidgets    = [tray,battery,clock,info,volume,networkWire]
                                     , Taffybar.widgetSpacing = 5
                                     }
