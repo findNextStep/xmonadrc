@@ -22,40 +22,28 @@ data UnitConfig = UnitConfig{ fontColor :: IO (Int,Int,Int)
                             , backgroundColor ::IO (Int,Int,Int)
                             , font :: IO String
                             }
+
+-- | 一个基于字符串的基本组件
 unitBase :: IO String -> IO Gtk.Widget
 unitBase content = do
     l <- pollingLabelNew "waitForInit" 1 content
     Gtk.widgetShowAll l
     return $ Gtk.toWidget l
 
-reFlashUnit :: IO Gtk.Widget -> IO Gtk.Widget
-reFlashUnit get = do
-    vbox <- Gtk.vBoxNew False 0
-    wi <- get
-    containerAdd vbox wi
-    _ <- forkIO $ forever $ do
-        containerRemove vbox wi
-        wi <- get
-        containerAdd vbox wi
-        -- Gtk.widgetShowAll vbox
-        threadDelay $ floor (1 * 1000000)
-    Gtk.widgetShowAll vbox
-    return $ Gtk.toWidget vbox
-
-workspace = workspaceIn
-
+-- | 显示当前工作窗口名称
 title =  do
     pagers <- pagerNew defaultPagerConfig
     windowSwitcherNew pagers
 
-workspaceIn =  do
+
+-- | 显示工作区
+workspace =  do
     pagers <- pagerNew defaultPagerConfig
         { workspaceBorder           = False
-        -- , useImages                 = True
-        -- , fillEmptyImages           = True
         }
     wspaceSwitcherNew pagers
 
+-- | 为纯文本组件添加配置
 addConfig :: IO String -> (IO String -> IO UnitConfig) -> IO String
 addConfig content configFun = do
     config <- configFun content
@@ -68,9 +56,11 @@ addConfig content configFun = do
         printf "%d" myfontSize ++ "' fgcolor='"++
         makeColor (fr,fg,fb)++ "'>"  ++ input ++ "%</span>")
 
+-- | 将颜色数值转变为颜色描述字符串
 makeColor :: (Int,Int,Int) -> String
 makeColor (r,g,b) = printf "#%02x%02x%02x" r b g
 
+-- | 默认组件设置
 defaultConfig :: IO String -> IO UnitConfig
 defaultConfig string = return UnitConfig{
     fontColor = return (0,0,0)
