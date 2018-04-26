@@ -31,7 +31,7 @@ borderWidth = 3
 
 -- | 确定各种状况下的窗口边框颜色
 normalBorderColor, focusedBorderColor :: String
-normalBorderColor  = "#000000"
+normalBorderColor  = "#122134"
 focusedBorderColor = "#325A8E" -- don't use hex, not <24 bit safe
 
 

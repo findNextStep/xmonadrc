@@ -30,7 +30,9 @@ isAC = do
 
 batteryConfig :: BarConfig
 batteryConfig = BarConfig { barBorderColor = (0.5, 0.5, 0.5)
-    , barBackgroundColor = const (50, 90, 142)
+    , barBackgroundColor = const (0x12/256.0, 
+                                  0x21/256.0, 
+                                  0x34/255.0)
     , barColor = colorFunc
     , barPadding = 1
     , barWidth = 12
