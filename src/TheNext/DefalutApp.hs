@@ -19,7 +19,7 @@ webBrowser::String
 webBrowser = "google-chrome --disable-gpu"
 
 explorer :: String
-explorer = "nautilus --no-desktop"
+explorer = "nemo"
 
 -- | 默认锁屏程序 
 screenLock :: String

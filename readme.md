@@ -47,6 +47,8 @@ NumLockX 1.2
 (C) 2000-2001 Lubos Lunak <l.lunak@kde.org>
 (C) 2001      Oswald Buddenhagen <ossi@kde.org>
 
+> nemo --version
+nemo 2.8.6
 ```
 
 ## 桌面背景
