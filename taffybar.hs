@@ -37,7 +37,9 @@ computerInfo = do
 
 main :: IO ()
 main = do
-  let clock = textClockNew Nothing "<span font='monospace 9' fgcolor='#fff'>%m-%d 周\n%H:%M %u</span>" 30
+  let clock = textClockNew Nothing ("<span font='monospace 9' fgcolor='#fff'>%m-%d </span>" 
+                                ++  "<span font='monospace 7' fgcolor='#fff'>周</span>" ++ "\n"
+                                ++  "<span font='monospace 9' fgcolor='#fff'>%H:%M %u</span>") 30
       networkWire = autoNetMonitorWithout ["lo"]
       note = notifyAreaNew defaultNotificationConfig
       battery = powerUnit
