@@ -5,19 +5,16 @@ module TheNext.Bar.AutoNetMonitor(
 
 import qualified Graphics.UI.Gtk as Gtk
 import System.Taffybar.NetMonitor   (netMonitorMultiNewWith)
-
 import System.Process               (readProcess)
 import Data.List                    ((\\))
 
 netInfo :: String
-netInfo = "<span font='monospace 10' fgcolor='#fff'>$inKB$kb▼\n$outKB$kb▲</span>"
+netInfo =  "<span font='6'>▼</span>" ++ "<span font='ubuntu Mono 10' fgcolor='#fff'>$inKB$kb</span>"  ++ "\n"
+        ++ "<span font='6'>▲</span>" ++ "<span font='ubuntu Mono 10' fgcolor='#fff'>$outKB$kb</span>"
 
 -- | 获取某个文件夹内的文件列表
 lsFile :: String -> IO [String]
-lsFile path = do
-    file <- readProcess "ls" [path] ""
-    return $ lines file
-
+lsFile path = lines <$> readProcess "ls" [path] ""
 -- | 获取所有网络设备的总网络用量的和
 autoNetMonitor :: IO Gtk.Widget
 autoNetMonitor = autoNetMonitorWithout []

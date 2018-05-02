@@ -66,5 +66,5 @@ defaultConfig string = return UnitConfig{
     fontColor = return (0,0,0)
     , fontSize = return 9
     , backgroundColor = return (0,0,0)
-    , font = return "monospace"
+    , font = return "ubuntu Mono 10"
 }

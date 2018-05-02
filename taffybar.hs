@@ -31,15 +31,15 @@ computerInfo = do
   cpu <- getCPULoad "cpu"
   mem <- memCallback
   let
-    cpuBar = "<span font='monospace 9' fgcolor='"++makeColor [head cpu,1.0-head cpu,0.0]++"'>cpu"  ++ printf "%02.0f"(head cpu * 100) ++ "%</span>"
-    memBar = "<span font='monospace 9' fgcolor='"++makeColor [head mem,1.0-head mem,0.0]++"'>mem"  ++ printf "%02.0f"(head mem * 100) ++ "%</span>"
+    cpuBar = "<span font='ubuntu Mono 10' fgcolor='"++makeColor [head cpu,1.0-head cpu,0.0]++"'>cpu"  ++ printf "%02.0f"(head cpu * 100) ++ "%</span>"
+    memBar = "<span font='ubuntu Mono 10' fgcolor='"++makeColor [head mem,1.0-head mem,0.0]++"'>mem"  ++ printf "%02.0f"(head mem * 100) ++ "%</span>"
   return (cpuBar ++ "\n" ++ memBar)
 
 main :: IO ()
 main = do
-  let clock = textClockNew Nothing ("<span font='monospace 9' fgcolor='#fff'>%m-%d </span>" 
-                                ++  "<span font='monospace 7' fgcolor='#fff'>周</span>" ++ "\n"
-                                ++  "<span font='monospace 9' fgcolor='#fff'>%H:%M %u</span>") 30
+  let clock = textClockNew Nothing ("<span font='ubuntu Mono 10' fgcolor='#fff'>%m-%d </span>" 
+                                ++  "<span font='ubuntu Mono 8' fgcolor='#fff'>周</span>" ++ "\n"
+                                ++  "<span font='ubuntu Mono 10' fgcolor='#fff'>%H:%M %u</span>") 30
       networkWire = autoNetMonitorWithout ["lo"]
       note = notifyAreaNew defaultNotificationConfig
       battery = powerUnit
