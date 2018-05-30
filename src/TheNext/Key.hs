@@ -118,7 +118,7 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     , ((modm                , xK_period     ), OP.sendMessage (IncMasterN (-1)))
 
     -- 重启xmonad
-    , ((modm                , xK_q          ), spawn "pkill taffybar;xmonad --recompile && xmonad --restart")
+    , ((modm                , xK_q          ), spawn "pkill taffybar;~/.cabal/bin/xmonad --restart")
 
     -- 退出xmonad
     ,((modm .|. shiftMask   , xK_q          ), confirmPrompt defaultXPConfig "quit" $ io exitSuccess)
