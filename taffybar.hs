@@ -1,55 +1,43 @@
-import System.Information.CPU2                      (getCPULoad)
-import System.Information.Memory                    (parseMeminfo,memoryUsedRatio)
-import System.Taffybar.FreedesktopNotifications     (notifyAreaNew,defaultNotificationConfig)
-import System.Taffybar.SimpleClock                  (textClockNew)
-import Text.Printf                                  (printf)
-import System.Process                               (readProcess)
-import System.Taffybar.Systray                      (systrayNew)
-import TheNext.Bar.AutoNetMonitor                   (autoNetMonitorWithout)
-import System.Taffybar       as Taffybar
-import TheNext.Bar.Unit
-import TheNext.Bar.ShowPower
+import System.Taffybar
 
-getVolume :: IO String
-getVolume = do
-  cmd <- readProcess "pactl" ["list","sinks"] []
-  return $ words (lines cmd !! 9) !! 3
+import System.Taffybar.Systray
+import System.Taffybar.TaffyPager
+import System.Taffybar.SimpleClock
+import System.Taffybar.FreedesktopNotifications
+import System.Taffybar.Weather
+import System.Taffybar.MPRIS
 
-memCallback :: IO [Double]
+import System.Taffybar.Widgets.PollingBar
+import System.Taffybar.Widgets.PollingGraph
+
+import System.Information.Memory
+import System.Information.CPU
+
 memCallback = do
   mi <- parseMeminfo
   return [memoryUsedRatio mi]
 
-toInt :: Double -> Int
-toInt = round
+cpuCallback = do
+  (userLoad, systemLoad, totalLoad) <- cpuLoad
+  return [totalLoad, systemLoad]
 
-makeColor :: [Double]-> String
-makeColor color = printf "#%02x%02x%02x" (toInt(head color * 255)) (toInt(color!!1 * 255)) (toInt(last color * 255))
-
-computerInfo ::IO String
-computerInfo = do
-  cpu <- getCPULoad "cpu"
-  mem <- memCallback
-  let
-    cpuBar = "<span font='ubuntu Mono 10' fgcolor='"++makeColor [head cpu,1.0-head cpu,0.0]++"'>cpu"  ++ printf "%02.0f"(head cpu * 100) ++ "%</span>"
-    memBar = "<span font='ubuntu Mono 10' fgcolor='"++makeColor [head mem,1.0-head mem,0.0]++"'>mem"  ++ printf "%02.0f"(head mem * 100) ++ "%</span>"
-  return (cpuBar ++ "\n" ++ memBar)
-
-main :: IO ()
 main = do
-  let clock = textClockNew Nothing ("<span font='ubuntu Mono 10' fgcolor='#fff'>%m-%d </span>" 
-                                ++  "<span font='ubuntu Mono 8' fgcolor='#fff'>周</span>" ++ "\n"
-                                ++  "<span font='ubuntu Mono 10' fgcolor='#fff'>%H:%M %u</span>") 30
-      networkWire = autoNetMonitorWithout ["lo"]
+  let memCfg = defaultGraphConfig { graphDataColors = [(1, 0, 0, 1)]
+                                  , graphLabel = Just "mem"
+                                  }
+      cpuCfg = defaultGraphConfig { graphDataColors = [ (0, 1, 0, 1)
+                                                      , (1, 0, 1, 0.5)
+                                                      ]
+                                  , graphLabel = Just "cpu"
+                                  }
+  let clock = textClockNew Nothing "<span fgcolor='orange'>%a %b %_d %H:%M</span>" 1
+      pager = taffyPagerNew defaultPagerConfig
       note = notifyAreaNew defaultNotificationConfig
-      battery = powerUnit
-      info = unitBase computerInfo
-      volume = unitBase getVolume
+      wea = weatherNew (defaultWeatherConfig "KMSN") 10
+      mpris = mprisNew defaultMPRISConfig
+      mem = pollingGraphNew memCfg 1 memCallback
+      cpu = pollingGraphNew cpuCfg 0.5 cpuCallback
       tray = systrayNew
-  Taffybar.taffybarMain Taffybar.defaultTaffybarConfig
-                                    { Taffybar.barHeight     = 28
-                                    , Taffybar.monitorNumber = 0
-                                    , Taffybar.startWidgets  = [workspace,title,note]
-                                    , Taffybar.endWidgets    = [tray,battery,clock,info,volume,networkWire]
-                                    , Taffybar.widgetSpacing = 5
-                                    }
+  defaultTaffybar defaultTaffybarConfig { startWidgets = [ pager, note ]
+                                        , endWidgets = [ tray, wea, clock, mem, cpu, mpris ]
+                                        }
