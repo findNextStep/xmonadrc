@@ -2,7 +2,6 @@ import XMonad
 import TheNext
 import XMonad.Util.Run                  (spawnPipe)
 import System.Taffybar.Hooks.PagerHints (pagerHints)
-import XMonad.Hooks.ManageDocks         (docks)
 import XMonad.Hooks.EwmhDesktops        (ewmh)
 import DBus.Client                      (connectSession)
 
@@ -12,7 +11,7 @@ main = do
     xmproc <- spawnPipe "xcompmgr -Ff"
     -- | 启动taffybar
     xmproc <- spawnPipe "~/.cabal/bin/theNexttaffybar 2> ~/test.txt"
-    xmonad $ docks $ ewmh $ pagerHints defaults
+    xmonad $ ewmh $ pagerHints defaults
 
 defaults = XConfig
     { XMonad.borderWidth        = TheNext.borderWidth
