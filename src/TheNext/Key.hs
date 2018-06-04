@@ -35,7 +35,7 @@ defaultModMask :: KeyMask
 defaultModMask =  rightAltMask
 
 switchTouchPad :: X()
-switchTouchPad = spawn "id=$(xinput --list | grep Touch | awk -F\"=\" '{print $2}' | awk '{print $1}')\nxinput --list-props $id| grep Enable | grep 0 && xinput enable $id|| xinput disable $id"
+switchTouchPad = spawn "id=$(xinput --list | grep Touch | awk -F\"=\" '{print $2}' | awk '{print $1}');xinput --list-props $id| grep Enable | awk '{print $4}' | grep  0 && xinput enable $id|| xinput disable $id"
 
 keys:: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
