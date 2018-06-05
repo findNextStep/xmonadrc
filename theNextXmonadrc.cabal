@@ -2,7 +2,7 @@
 -- documentation, see http://haskell.org/cabal/users-guide/
 
 name:                theNextXmonadrc
-version:             0.1.0.7
+version:             0.1.0.8
 description:         the_next xmonad configuration file         
 license:             BSD3
 license-file:        LICENSE
@@ -20,6 +20,7 @@ library
                        TheNext.Hook
                        TheNext.Param
                        TheNext.Layout
+                       TheNext.System.Battery
   build-depends:       base,
                        xmonad >= 0.13,
                        data-default,

@@ -1,0 +1,17 @@
+module TheNext.System.Battery(
+    getBattery,
+    isCharge
+)where
+
+
+-- get how many battery the laptop have
+getBattery :: IO Int
+getBattery = do
+    power <- readFile "/sys/class/power_supply/BAT0/capacity"
+    return (read power :: Int)
+
+-- if the laptop is charging
+isCharge :: IO Bool
+isCharge = do 
+    isCharging <- readFile "/sys/class/power_supply/AC/online"
+    return ((read isCharging ::Int) == 1)
