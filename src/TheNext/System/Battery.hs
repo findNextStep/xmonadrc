@@ -18,5 +18,8 @@ isCharge = do
     isCharging <- readFile "/sys/class/power_supply/AC/online"
     return ((read isCharging ::Int) == 1)
 
-checkIfHasBattery:: IO Bool
+-- check if this is a laptop
+-- this code not been checked in PC
+-- TODO
+checkIfHasBattery :: IO Bool
 checkIfHasBattery = doesDirectoryExist "/sys/class/power_supply/BAT0"
