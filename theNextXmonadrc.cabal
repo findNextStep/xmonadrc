@@ -22,6 +22,7 @@ library
                        TheNext.Layout
                        TheNext.System.Battery
   build-depends:       base,
+                       directory,
                        xmonad >= 0.13,
                        data-default,
                        gtk-traymanager,

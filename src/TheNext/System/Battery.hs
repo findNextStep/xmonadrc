@@ -1,8 +1,10 @@
 module TheNext.System.Battery(
     getBattery,
-    isCharge
+    isCharge,
+    checkIfHasBattery
 )where
 
+import System.Directory(doesDirectoryExist)
 
 -- get how many battery the laptop have
 getBattery :: IO Int
@@ -15,3 +17,6 @@ isCharge :: IO Bool
 isCharge = do 
     isCharging <- readFile "/sys/class/power_supply/AC/online"
     return ((read isCharging ::Int) == 1)
+
+checkIfHasBattery:: IO Bool
+checkIfHasBattery = doesDirectoryExist "/sys/class/power_supply/BAT0"
