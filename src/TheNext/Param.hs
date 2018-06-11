@@ -27,7 +27,7 @@ clickJustFocuses = True
 
 -- | 窗口边框粗细
 borderWidth :: Dimension
-borderWidth = 3
+borderWidth = 1
 
 -- | 确定各种状况下的窗口边框颜色
 normalBorderColor, focusedBorderColor :: String
