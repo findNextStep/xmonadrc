@@ -23,7 +23,7 @@ explorer = "nemo"
 
 -- | 默认锁屏程序 
 screenLock :: String
-screenLock = "gnome-screensaver-command -l"
+screenLock = "dm-tool lock"
 
 -- | 默认截图工具
 screenShutter :: String
