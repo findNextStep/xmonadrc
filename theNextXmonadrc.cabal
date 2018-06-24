@@ -27,6 +27,7 @@ library
                        xmonad >= 0.13,
                        data-default,
                        mtl,
+                       regex-posix,
                        gtk-traymanager,
                        enclosed-exceptions >= 1.0.0.1,
                        cairo,
