@@ -18,6 +18,7 @@ import qualified XMonad.StackSet    as W
 import qualified Data.Map           as M
 import qualified TheNext.DefalutApp as APP
 import qualified TheNext.Param      as Param
+import TheNext.System.Voice         as Voice
 import XMonad.Layout
 import Graphics.X11.Xlib
 
@@ -127,11 +128,11 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
     -- | 音量控制
     -- | 音量增加
-    [((superMask          , xK_F5    ), spawn $ "pactl set-sink-volume 0 -" ++ Param.volumeInterval ++ "%")
+    [((superMask          , xK_F5    ), Voice.volumeIncrease Param.volumeInterval)
     -- | 音量减少
-    ,((superMask          , xK_F6    ), spawn $ "pactl set-sink-volume 0 +" ++ Param.volumeInterval ++ "%")
+    ,((superMask          , xK_F6    ), Voice.volumeDecrease Param.volumeInterval)
     -- | 立即静音
-    ,((superMask          , xK_F3    ), spawn "pactl set-sink-volume 0 0")
+    ,((superMask          , xK_F3    ), Voice.mute)
 
     ]
     ++

@@ -37,5 +37,5 @@ focusedBorderColor = "#325A8E" -- don't use hex, not <24 bit safe
 
 -- | 设置音量调节间隔，以百分比为单位
 --   请保证这是一个数字
-volumeInterval :: String
-volumeInterval = "5"
+volumeInterval :: Int 
+volumeInterval = 5
