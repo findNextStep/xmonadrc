@@ -10,13 +10,11 @@ import System.Process  (readProcess)
 import Text.Regex.Posix
 import Control.Monad.Reader(MonadIO())
 
--- | 读取音量
-readVolume :: IO Integer
+-- | 读取音量以百分比为计
+readVolume :: IO Int
 readVolume = do
     test <- readProcess "amixer" [] []
-    let re = test =~ "Mono: Playback [0-9]* \\[[0-9]*" :: String
-    let vo =read (tail (re =~ "\\[[0-9]+" :: String)) :: Integer
-    return vo
+    return (fromInteger (read (tail ((test =~ "Mono: Playback [0-9]* \\[[0-9]*" :: String) =~ "\\[[0-9]+" :: String)) :: Integer)::Int)
 
 -- | 静音
 mute ::   MonadIO m => m ()
