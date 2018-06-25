@@ -13,8 +13,7 @@ loadDisk(){
     for x in $a
         do
         if [ $x != 'KNAME' ] ;then
-            test=$(lsblk -f --output kname,label | grep $x | awk '{print $1}')
-            udisksctl mount -b /dev/$test
+            lsblk -f --output label,size | grep $x | grep [0-9]*.[0-9]*G && test=$(lsblk -f --output kname,label | grep $x | awk '{print $1}') && udisksctl mount -b /dev/$test
         fi
     done
 }
