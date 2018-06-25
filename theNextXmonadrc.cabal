@@ -22,6 +22,7 @@ library
                        TheNext.Layout
                        TheNext.System.Voice
                        TheNext.System.Battery
+                       TheNext.System.Cpu
   build-depends:       base,
                        directory,
                        xmonad >= 0.13,
@@ -33,6 +34,7 @@ library
                        cairo,
                        containers,
                        process,
+                       taffybar == 0.4.6,
                        xmonad-contrib >= 0.13,
                        gtk,
                        X11
