@@ -2,6 +2,7 @@ module TheNext.System.Voice(
     mute,
     volumeIncrease,
     volumeDecrease,
+    volumeSet,
     readVolume
 )where
 
@@ -27,3 +28,9 @@ volumeIncrease size = spawn $ "pactl set-sink-volume 0 +" ++ show size ++ "%"
 -- | 音量减少
 volumeDecrease :: MonadIO m => Int -> m()
 volumeDecrease size = spawn $ "pactl set-sink-volume 0 +" ++ show size ++ "%"
+
+-- | 设定音量
+volumeSet :: MonadIO m => Int -> m()
+volumeSet volume =  do
+    mute
+    volumeIncrease volume
