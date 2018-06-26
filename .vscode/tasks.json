@@ -4,7 +4,7 @@
         {
             "label": "setup",
             "type": "shell",
-            "command": "sh ${workspaceRoot}/script/buildUp.sh",
+            "command": "zsh ${workspaceRoot}/script/buildUp.sh",
             "group": {
                 "kind": "build",
                 "isDefault": true
