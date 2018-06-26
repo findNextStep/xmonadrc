@@ -27,4 +27,4 @@ screenLock = "dm-tool lock"
 
 -- | 默认截图工具
 screenShutter :: String
-screenShutter = "shutter -s"
+screenShutter = "shutter -s -e -n"

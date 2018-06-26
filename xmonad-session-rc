@@ -20,6 +20,9 @@ loadDisk(){
 
 loadDisk &
 
+# 预先加载shutter
+shutter --min_at_startup &
+
 # 执行键盘按键重映射
 xmodmap ~/.xmonad/script/modmap
 
