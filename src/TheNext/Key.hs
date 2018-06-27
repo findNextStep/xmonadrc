@@ -11,6 +11,7 @@ import qualified XMonad.Core        as XMonad           (workspaces,layoutHook,m
 import Data.Bits                                        ((.|.),(.&.))
 import System.Exit                                      (exitSuccess)
 import XMonad.Hooks.ManageDocks                         (ToggleStruts(..))
+import XMonad.Actions.WindowMenu                        (windowMenu)
 import XMonad.Prompt
 import XMonad.Prompt.ConfirmPrompt
 import qualified XMonad.Operations  as OP
@@ -21,6 +22,7 @@ import qualified TheNext.Param      as Param
 import TheNext.System.Voice         as Voice
 import XMonad.Layout
 import Graphics.X11.Xlib
+import XMonad.Layout.MouseResizableTile
 
 
 -- | 可以通过xmodmap确定按键绑定
@@ -93,7 +95,7 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
     -- 锁定主窗口
     , ((modm                , xK_m          ), OP.windows W.focusMaster)
-
+    , ((modm                , xK_o          ), windowMenu)
     -- 将当前窗口放入主区域
     , ((modm .|. shiftMask  , xK_Return     ), OP.windows W.swapMaster)
 
@@ -105,7 +107,10 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
     -- 缩小主窗口
     , ((modm                , xK_h          ), OP.sendMessage Shrink)
-
+    -- 窗口垂直缩小
+    , ((modm                , xK_u          ), OP.sendMessage ShrinkSlave)
+    -- 窗口垂直放大
+    , ((modm                , xK_i          ), OP.sendMessage ExpandSlave)
     -- 放大主窗口
     , ((modm                , xK_l          ), OP.sendMessage Expand)
 
