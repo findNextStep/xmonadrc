@@ -50,6 +50,8 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- 启动启动器
     , ((superMask           , xK_p          ), spawn APP.launcher)
     
+    -- 启动gui时钟
+    ,((superMask .|. ctrlMask,xK_t          ), spawn APP.myClock)
 
     -- 启动资源管理器
     , ((superMask           , xK_f          ), spawn APP.explorer)

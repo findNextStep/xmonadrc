@@ -5,6 +5,7 @@ module TheNext.DefalutApp
         webBrowser,
         screenLock,
         screenShutter,
+        myClock,
         launcher
     )where
 
@@ -28,3 +29,7 @@ screenLock = "dm-tool lock"
 -- | 默认截图工具
 screenShutter :: String
 screenShutter = "shutter -s -e -n"
+
+-- | 默认时钟程序
+myClock :: String
+myClock = "xclock -update 1 -bg black -norender -hd white -hl white -bd red -fg \"#325A8E\""
