@@ -8,8 +8,6 @@ import DBus.Client                      (connectSession)
 
 main = do
     client <- connectSession
-    -- | 设置窗口透明和切换特效
-    xmproc <- spawnPipe "xcompmgr -Ff"
     -- | 启动taffybar
     xmproc <- spawnPipe "~/.cabal/bin/theNexttaffybar"
     xmonad $ docks $ ewmh $ pagerHints defaults

@@ -23,6 +23,9 @@ loadDisk &
 # 预先加载shutter
 shutter --min_at_startup &
 
+# 窗口切换特效
+xcompmgr -Ff&
+
 # 执行键盘按键重映射
 xmodmap ~/.xmonad/script/modmap
 
