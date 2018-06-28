@@ -2,7 +2,7 @@
 -- documentation, see http://haskell.org/cabal/users-guide/
 
 name:                theNextXmonadrc
-version:             0.1.0.8
+version:             0.1.0.9
 description:         the_next xmonad configuration file         
 license:             BSD3
 license-file:        LICENSE
