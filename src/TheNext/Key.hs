@@ -135,7 +135,7 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
     -- | 音量控制
     -- | 音量增加
-    [((superMask          , xK_F5    ), Voice.volumeIncrease Param.volumeInterval)
+    [((superMask          , xK_F5    ), Voice.volumeIncrease (-Param.volumeInterval))
     -- | 音量减少
     ,((superMask          , xK_F6    ), Voice.volumeDecrease Param.volumeInterval)
     -- | 立即静音
