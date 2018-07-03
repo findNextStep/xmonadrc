@@ -150,7 +150,7 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     ++
     -- 多屏幕控制
     [((m .|. superMask, key), OP.screenWorkspace sc >>= flip whenJust (OP.windows . f))
-        | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+        | (key, sc) <- zip [xK_q, xK_w, xK_e] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 mouseBindings :: XConfig Layout -> M.Map (KeyMask, Button) (Window -> X ())
