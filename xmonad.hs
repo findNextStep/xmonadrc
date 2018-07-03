@@ -7,7 +7,6 @@ import XMonad.Hooks.EwmhDesktops        (ewmh)
 import DBus.Client                      (connectSession)
 
 main = do
-    client <- connectSession
     -- | 启动taffybar
     xmproc <- spawnPipe "~/.cabal/bin/theNexttaffybar"
     xmonad $ docks $ ewmh $ pagerHints defaults
