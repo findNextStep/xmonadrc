@@ -6,6 +6,7 @@ import System.Taffybar.SimpleClock
 import System.Taffybar.FreedesktopNotifications
 import System.Taffybar.Weather
 import System.Taffybar.MPRIS
+import System.Taffybar.Pager
 
 import System.Taffybar.Widgets.PollingBar
 import System.Taffybar.Widgets.PollingGraph
@@ -22,22 +23,34 @@ cpuCallback = do
   (userLoad, systemLoad, totalLoad) <- cpuLoad
   return [totalLoad, systemLoad]
 
+setFontSize size str = "<span font=\'" ++ size ++ "\'>" ++ str ++ "</span>"
+
 main = do
-  let memCfg = defaultGraphConfig { graphDataColors = [(1, 0, 0, 1)]
+  let memCfg = defaultGraphConfig { graphDataColors = [(1, 1, 1, 1)]
                                   , graphLabel = Just "mem"
                                   }
-      cpuCfg = defaultGraphConfig { graphDataColors = [ (0, 1, 0, 1)
-                                                      , (1, 0, 1, 0.5)
+      cpuCfg = defaultGraphConfig { graphDataColors = [ (1, 1, 1, 1)
+                                                      , (1, 1, 1, 0.5)
                                                       ]
                                   , graphLabel = Just "cpu"
                                   }
-  let clock = textClockNew Nothing "<span fgcolor='orange'>%a %b %_d %H:%M</span>" 1
-      pager = taffyPagerNew defaultPagerConfig
+  let clock = textClockNew Nothing "<span>%F 周 %T</span>" 1
+      pager = taffyPagerNew defaultPagerConfig { activeWindow     = setFontSize "9" . colorize "#fff" "" . escape
+                                               , activeLayout     = escape
+                                               , activeWorkspace  = wrap "-> " "" . escape
+                                               , hiddenWorkspace  = colorize "#888" "" . escape
+                                               , emptyWorkspace   = const ""
+                                               , visibleWorkspace = colorize "#bbb" "" . wrap "(" ")" . escape
+                                               , urgentWorkspace  = colorize "red" "yellow" . escape
+                                               , widgetSep        = colorize "#325A8E" "" " | "
+                                               }
       -- note = notifyAreaNew defaultNotificationConfig
       mpris = mprisNew defaultMPRISConfig
       mem = pollingGraphNew memCfg 1 memCallback
       cpu = pollingGraphNew cpuCfg 0.5 cpuCallback
       tray = systrayNew
-  defaultTaffybar defaultTaffybarConfig { startWidgets = [ pager ] -- , note ]
+  taffybarMain defaultTaffybarConfig { startWidgets = [ pager ] -- , note ]
                                         , endWidgets = [ tray, clock, mem, cpu, mpris ]
+                                        , barHeight = 18
+                                        , widgetSpacing = 1
                                         }
