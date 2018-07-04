@@ -34,7 +34,7 @@ main = do
                                                       ]
                                   , graphLabel = Just "cpu"
                                   }
-  let clock = textClockNew Nothing "<span>%F 周 %T</span>" 1
+  let clock = textClockNew Nothing "<span>%F %T</span>" 1
       pager = taffyPagerNew defaultPagerConfig { activeWindow     = setFontSize "9" . colorize "#fff" "" . escape
                                                , activeLayout     = escape
                                                , activeWorkspace  = wrap "-> " "" . escape
