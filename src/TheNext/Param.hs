@@ -13,7 +13,7 @@ import Graphics.X11.Xlib.Types (Dimension)
 import Graphics.X11.Types
 
 workspaces :: [WorkspaceId]
-workspaces = map show [1 .. 9 :: Int]
+workspaces = map show [1 .. 10 :: Int]
 
 
 -- | 窗口锁定不跟随鼠标移动

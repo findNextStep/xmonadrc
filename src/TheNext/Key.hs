@@ -145,7 +145,7 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     ++
     -- 工作区切换
     [((m .|. superMask, k), OP.windows $ f i)
-        | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
+        | (i, k) <- zip (XMonad.workspaces conf)([xK_1 .. xK_9] ++ [xK_0])
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
     ++
     -- 多屏幕控制
