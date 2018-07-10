@@ -37,3 +37,6 @@ python2 ~/.nutstore/dist/bin/nutstore-pydaemon.py&
 
 # 开启小键盘
 numlockx on
+
+# 屏幕常亮
+xset -dpms s off
