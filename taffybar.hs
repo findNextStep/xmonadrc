@@ -28,11 +28,15 @@ setFontSize size str = "<span font=\'" ++ size ++ "\'>" ++ str ++ "</span>"
 main = do
   let memCfg = defaultGraphConfig { graphDataColors = [(1, 1, 1, 1)]
                                   , graphLabel = Just "mem"
+                                  , graphBackgroundColor = (18/255,33/255,52/255)
+                                  , graphBorderColor = (43/255,78/255,123/255)
                                   }
       cpuCfg = defaultGraphConfig { graphDataColors = [ (1, 1, 1, 1)
                                                       , (1, 1, 1, 0.5)
                                                       ]
+                                  , graphBackgroundColor = (18/255,33/255,52/255)
                                   , graphLabel = Just "cpu"
+                                  , graphBorderColor = (43/255,78/255,123/255)
                                   }
   let clock = textClockNew Nothing "<span>%F %T</span>" 1
       pager = taffyPagerNew defaultPagerConfig { activeWindow     = setFontSize "9" . colorize "#fff" "" . escape
