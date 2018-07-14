@@ -10,7 +10,7 @@ module TheNext.DefalutApp
     )where
 
 terminal::String
-terminal = "gnome-terminal"
+terminal = "sakura"
 
 launcher::String
 launcher = "dmenu_run"
@@ -32,4 +32,4 @@ screenShutter = "shutter -s -e -n"
 
 -- | 默认时钟程序
 myClock :: String
-myClock = "xclock -update 1 -bg black -norender -hd white -hl white -bd red -fg \"#325A8E\""
+myClock = "myclock"

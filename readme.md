@@ -49,6 +49,9 @@ NumLockX 1.2
 
 > nemo --version
 nemo 2.8.6
+
+> sakura --version
+sakura 版本是 3.3.4 
 ```
 
 ## 桌面背景
