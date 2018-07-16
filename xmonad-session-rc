@@ -20,6 +20,8 @@ loadDisk(){
 
 loadDisk &
 
+fan &
+
 # 预先加载shutter
 shutter --min_at_startup &
 
