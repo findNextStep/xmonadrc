@@ -92,6 +92,8 @@ keys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- 锁定下一个窗口
     , ((modm                , xK_j          ), OP.windows W.focusDown)
 
+    , ((leftAltMask         , xK_Tab        ), OP.windows W.focusDown)
+
     -- 锁定上一个窗口
     , ((modm                , xK_k          ), OP.windows W.focusUp)
 
