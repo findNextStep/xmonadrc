@@ -13,7 +13,7 @@ terminal::String
 terminal = "sakura"
 
 launcher::String
-launcher = "dmenu_run"
+launcher = "dmenu_run -p \">\" -nb \"#122134\" -sb \"#325A8E\" -b"
 
 -- | 默认浏览器
 webBrowser::String
