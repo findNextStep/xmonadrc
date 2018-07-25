@@ -7,6 +7,7 @@ import System.Taffybar.FreedesktopNotifications
 import System.Taffybar.Weather
 import System.Taffybar.MPRIS
 import System.Taffybar.Pager
+import System.Taffybar.NetMonitor
 
 import System.Taffybar.Widgets.PollingBar
 import System.Taffybar.Widgets.PollingGraph
@@ -53,8 +54,9 @@ main = do
       mem = pollingGraphNew memCfg 1 memCallback
       cpu = pollingGraphNew cpuCfg 0.5 cpuCallback
       tray = systrayNew
+      net = netMonitorNew 1 "wlp3s0"
   taffybarMain defaultTaffybarConfig { startWidgets = [ pager ] -- , note ]
-                                        , endWidgets = [ tray, clock, mem, cpu, mpris ]
+                                        , endWidgets = [ tray, clock, mem, cpu, net ]
                                         , barPosition = Bottom
                                         , barHeight = 18
                                         , widgetSpacing = 1
