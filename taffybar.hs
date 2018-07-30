@@ -11,11 +11,14 @@ import System.Taffybar.NetMonitor
 
 import System.Taffybar.Widgets.PollingBar
 import System.Taffybar.Widgets.PollingGraph
+import System.Taffybar.Widgets.PollingLabel
 
 import System.Information.Memory
 import System.Information.CPU
 import System.Taffybar.DiskIOMonitor
 
+import TheNext.System.Voice
+import Graphics.UI.Gtk
 memCallback = do
   mi <- parseMeminfo
   return [memoryUsedRatio mi]
@@ -25,6 +28,10 @@ cpuCallback = do
   return [totalLoad, systemLoad]
 
 font = "ubuntu mono bold 12"
+
+getVoice = do
+  volume <- readVolume
+  return $ setFontSize font ("voice: " ++ show volume ++ "\t")
 
 setFontSize size str = "<span font=\'" ++ size ++ "\'>" ++ str ++ "</span>"
 
@@ -57,8 +64,13 @@ main = do
       cpu = pollingGraphNew cpuCfg 0.5 cpuCallback
       tray = systrayNew
       net = netMonitorNewWith 1 "wlp3s0" 2 $ setFontSize font "▼$inKB$kb/s\t▲$outKB$kb/s\t"
+      voice = do
+        l <- pollingLabelNew "voice " 1.0 getVoice
+        widgetShowAll l
+        return l
+
   taffybarMain defaultTaffybarConfig { startWidgets = [ pager ] -- , note ]
-                                        , endWidgets = [ tray, clock, mem, cpu, net ]
+                                        , endWidgets = [ tray, clock, mem, cpu, voice, net ]
                                         , barPosition = Bottom
                                         , barHeight = 18
                                         , widgetSpacing = 1
