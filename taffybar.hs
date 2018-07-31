@@ -31,7 +31,7 @@ font = "ubuntu mono bold 12"
 
 getVoice = do
   volume <- readVolume
-  return $ setFontSize font ("voice: " ++ show volume ++ "\t")
+  return $ setFontSize font ("voice: " ++ show volume ++ "% ")
 
 setFontSize size str = "<span font=\'" ++ size ++ "\'>" ++ str ++ "</span>"
 
@@ -68,9 +68,13 @@ main = do
         l <- pollingLabelNew "voice " 1.0 getVoice
         widgetShowAll l
         return l
-
+      io = dioMonitorNew defaultGraphConfig { graphDataColors = [(1, 1, 1, 1)]
+                                            , graphBackgroundColor = (18/255,33/255,52/255)
+                                            , graphLabel = Just $ setFontSize font "io"
+                                            , graphBorderColor = (18/255,23/255,52/255)
+                                            } 1 "sdc"
   taffybarMain defaultTaffybarConfig { startWidgets = [ pager ] -- , note ]
-                                        , endWidgets = [ tray, clock, mem, cpu, voice, net ]
+                                        , endWidgets = [ tray, clock, mem, cpu, io, voice, net ]
                                         , barPosition = Bottom
                                         , barHeight = 18
                                         , widgetSpacing = 1
