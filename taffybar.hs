@@ -18,6 +18,7 @@ import System.Information.CPU
 import System.Taffybar.DiskIOMonitor
 
 import TheNext.System.Voice
+import TheNext.System.Battery
 import Graphics.UI.Gtk
 memCallback = do
   mi <- parseMeminfo
@@ -33,6 +34,10 @@ getVoice = do
   volume <- readVolume
   return $ setFontSize font ("voice: " ++ show volume ++ "% ")
 
+getBatteryState = do
+  battery <- getBattery
+  charge <- isCharge
+  return $ setFontSize font ((if charge then "" else "in ") ++ "battery: " ++ show battery ++ "%   ")
 setFontSize size str = "<span font=\'" ++ size ++ "\'>" ++ str ++ "</span>"
 
 main = do
@@ -68,13 +73,17 @@ main = do
         l <- pollingLabelNew "voice " 1.0 getVoice
         widgetShowAll l
         return l
+      battery = do 
+        l <- pollingLabelNew "battery" 1.0 getBatteryState
+        widgetShowAll l
+        return l
       io = dioMonitorNew defaultGraphConfig { graphDataColors = [(1, 1, 1, 1)]
                                             , graphBackgroundColor = (18/255,33/255,52/255)
                                             , graphLabel = Just $ setFontSize font "io"
                                             , graphBorderColor = (18/255,23/255,52/255)
                                             } 1 "sdc"
   taffybarMain defaultTaffybarConfig { startWidgets = [ pager ] -- , note ]
-                                        , endWidgets = [ tray, clock, mem, cpu, io, voice, net ]
+                                        , endWidgets = [ tray, clock, mem, cpu, io, battery, voice, net ]
                                         , barPosition = Bottom
                                         , barHeight = 18
                                         , widgetSpacing = 1
