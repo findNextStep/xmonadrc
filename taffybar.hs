@@ -55,7 +55,7 @@ main = do
                                   }
   let clock = textClockNew Nothing (setFontSize font "<span>%F %T</span>") 1
       pager = taffyPagerNew defaultPagerConfig { activeWindow     = setFontSize font . colorize "#fff" "" . escape
-                                               , activeLayout     = setFontSize font . escape                                 
+                                               , activeLayout     = setFontSize font . escape
                                                , activeWorkspace  = setFontSize font . wrap "-> " "" . escape
                                                , hiddenWorkspace  = setFontSize font . colorize "#888" "" . escape
                                                , emptyWorkspace   = const ""
@@ -73,7 +73,7 @@ main = do
         l <- pollingLabelNew "voice " 1.0 getVoice
         widgetShowAll l
         return l
-      battery = do 
+      battery = do
         l <- pollingLabelNew "battery" 1.0 getBatteryState
         widgetShowAll l
         return l
