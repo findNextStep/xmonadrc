@@ -3,9 +3,6 @@ import System.Taffybar
 import System.Taffybar.Systray
 import System.Taffybar.TaffyPager
 import System.Taffybar.SimpleClock
-import System.Taffybar.FreedesktopNotifications
-import System.Taffybar.Weather
-import System.Taffybar.MPRIS
 import System.Taffybar.Pager
 import System.Taffybar.NetMonitor
 
@@ -54,7 +51,7 @@ main = do
                                   , graphBorderColor = (18/255,23/255,52/255)
                                   }
   let clock = textClockNew Nothing (setFontSize font "<span>%F %T</span>") 1
-      pager = taffyPagerNew defaultPagerConfig { activeWindow     = setFontSize font . colorize "#fff" "" . escape
+      pager = taffyPagerNew defaultPagerConfig { activeWindow     = setFontSize font . colorize "#fff" "" . escape . shorten 60
                                                , activeLayout     = setFontSize font . escape
                                                , activeWorkspace  = setFontSize font . wrap "-> " "" . escape
                                                , hiddenWorkspace  = setFontSize font . colorize "#888" "" . escape
@@ -63,8 +60,6 @@ main = do
                                                , urgentWorkspace  = setFontSize font . colorize "red" "yellow" . escape
                                                , widgetSep        = setFontSize font (colorize "#325A8E" "" "|")
                                                }
-      -- note = notifyAreaNew defaultNotificationConfig
-      mpris = mprisNew defaultMPRISConfig
       mem = pollingGraphNew memCfg 1 memCallback
       cpu = pollingGraphNew cpuCfg 0.5 cpuCallback
       tray = systrayNew
@@ -82,7 +77,7 @@ main = do
                                             , graphLabel = Just $ setFontSize font "io"
                                             , graphBorderColor = (18/255,23/255,52/255)
                                             } 1 "sdc"
-  taffybarMain defaultTaffybarConfig { startWidgets = [ pager ] -- , note ]
+  taffybarMain defaultTaffybarConfig { startWidgets = [ pager ]
                                         , endWidgets = [ tray, clock, mem, cpu, io, battery, voice, net ]
                                         , barPosition = Bottom
                                         , barHeight = 18
