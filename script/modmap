@@ -4,3 +4,9 @@ clear Mod3
 
 add Mod1 = Alt_L Meta_L
 add Mod3 = Alt_R
+
+! Swap caps lock and escape
+remove Lock = Caps_Lock
+keysym Escape = Caps_Lock
+keysym Caps_Lock = Escape
+add Lock = Caps_Lock
