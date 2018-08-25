@@ -52,7 +52,7 @@ main = do
                                   }
   let clock = textClockNew Nothing (setFontSize font "<span>%F %T</span>") 1
       pager = taffyPagerNew defaultPagerConfig { activeWindow     = setFontSize font . colorize "#fff" "" . escape . shorten 60
-                                               , activeLayout     = setFontSize font . escape
+                                               , activeLayout     = setFontSize font . escape . take 4
                                                , activeWorkspace  = setFontSize font . wrap "-> " "" . escape
                                                , hiddenWorkspace  = setFontSize font . colorize "#888" "" . escape
                                                , emptyWorkspace   = const ""
