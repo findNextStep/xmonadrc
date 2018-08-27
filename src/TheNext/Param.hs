@@ -3,7 +3,7 @@ module TheNext.Param(
     focusFollowsMouse,
     clickJustFocuses,
     borderWidth,
-    normalBorderColor, 
+    normalBorderColor,
     focusedBorderColor,
     volumeInterval
 )where
@@ -31,11 +31,11 @@ borderWidth = 1
 
 -- | 确定各种状况下的窗口边框颜色
 normalBorderColor, focusedBorderColor :: String
-normalBorderColor  = "#122134"
+normalBorderColor  = "#000000"
 focusedBorderColor = "#ff0000" -- don't use hex, not <24 bit safe
 
 
 -- | 设置音量调节间隔，以百分比为单位
 --   请保证这是一个数字
-volumeInterval :: Int 
+volumeInterval :: Int
 volumeInterval = 5

@@ -40,25 +40,25 @@ setFontSize size str = "<span font=\'" ++ size ++ "\'>" ++ str ++ "</span>"
 main = do
   let memCfg = defaultGraphConfig { graphDataColors = [(1, 1, 1, 1)]
                                   , graphLabel = Just $ setFontSize font "mem"
-                                  , graphBackgroundColor = (18/255,33/255,52/255)
-                                  , graphBorderColor = (18/255,23/255,52/255)
+                                  , graphBackgroundColor = (0/255,0/255,0/255)
+                                  , graphBorderColor = (128/255,128/255,128/255)
                                   }
       cpuCfg = defaultGraphConfig { graphDataColors = [ (1, 1, 1, 1)
                                                       , (1, 1, 1, 0.5)
                                                       ]
-                                  , graphBackgroundColor = (18/255,33/255,52/255)
                                   , graphLabel = Just $ setFontSize font "cpu"
-                                  , graphBorderColor = (18/255,23/255,52/255)
+                                  , graphBackgroundColor = (0/255,0/255,0/255)
+                                  , graphBorderColor = (128/255,128/255,128/255)
                                   }
   let clock = textClockNew Nothing (setFontSize font "<span>%F %T</span>") 1
-      pager = taffyPagerNew defaultPagerConfig { activeWindow     = setFontSize font . colorize "#fff" "" . escape . shorten 60
+      pager = taffyPagerNew defaultPagerConfig { activeWindow     = setFontSize font . colorize "#fff" "" . escape . shorten 50
                                                , activeLayout     = setFontSize font . escape . take 4
                                                , activeWorkspace  = setFontSize font . wrap "-> " "" . escape
                                                , hiddenWorkspace  = setFontSize font . colorize "#888" "" . escape
                                                , emptyWorkspace   = const ""
                                                , visibleWorkspace = setFontSize font . colorize "#bbb" "" . wrap "(" ")" . escape
                                                , urgentWorkspace  = setFontSize font . colorize "red" "yellow" . escape
-                                               , widgetSep        = setFontSize font (colorize "#325A8E" "" "|")
+                                               , widgetSep        = setFontSize font (colorize "#666" "" "|")
                                                }
       mem = pollingGraphNew memCfg 1 memCallback
       cpu = pollingGraphNew cpuCfg 0.5 cpuCallback
@@ -73,9 +73,9 @@ main = do
         widgetShowAll l
         return l
       io = dioMonitorNew defaultGraphConfig { graphDataColors = [(1, 1, 1, 1)]
-                                            , graphBackgroundColor = (18/255,33/255,52/255)
                                             , graphLabel = Just $ setFontSize font "io"
-                                            , graphBorderColor = (18/255,23/255,52/255)
+                                            , graphBackgroundColor = (0/255,0/255,0/255)
+                                            , graphBorderColor = (128/255,128/255,128/255)
                                             } 1 "sdc"
   taffybarMain defaultTaffybarConfig { startWidgets = [ pager ]
                                         , endWidgets = [ tray, clock, mem, cpu, io, battery, voice, net ]
