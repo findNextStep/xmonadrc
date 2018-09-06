@@ -25,7 +25,7 @@ library
                        TheNext.System.Cpu
   build-depends:       base,
                        directory,
-                       xmonad >= 0.13,
+                       xmonad == 0.13,
                        data-default,
                        mtl,
                        regex-posix,
