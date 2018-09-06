@@ -29,24 +29,24 @@ font = "ubuntu mono bold 12"
 
 getVoice = do
   volume <- readVolume
-  return $ setFontSize font ("voice: " ++ show volume ++ "% ")
+  return $ setFontSize font ((if volume > 1 then "🔊 " else "🔈 ") ++ show volume ++ "% ")
 
 getBatteryState = do
   battery <- getBattery
   charge <- isCharge
-  return $ setFontSize font ((if charge then "" else "in ") ++ "battery: " ++ show battery ++ "%   ")
+  return $ setFontSize font ((if charge then "🗲" else "🔋") ++ "" ++ show battery ++ "%   ")
 setFontSize size str = "<span font=\'" ++ size ++ "\'>" ++ str ++ "</span>"
 
 main = do
   let memCfg = defaultGraphConfig { graphDataColors = [(1, 1, 1, 1)]
-                                  , graphLabel = Just $ setFontSize font "mem"
+                                  , graphLabel = Just $ setFontSize font "🍱"
                                   , graphBackgroundColor = (0/255,0/255,0/255)
                                   , graphBorderColor = (128/255,128/255,128/255)
                                   }
       cpuCfg = defaultGraphConfig { graphDataColors = [ (1, 1, 1, 1)
                                                       , (1, 1, 1, 0.5)
                                                       ]
-                                  , graphLabel = Just $ setFontSize font "cpu"
+                                  , graphLabel = Just $ setFontSize font "💻"
                                   , graphBackgroundColor = (0/255,0/255,0/255)
                                   , graphBorderColor = (128/255,128/255,128/255)
                                   }
@@ -63,7 +63,7 @@ main = do
       mem = pollingGraphNew memCfg 1 memCallback
       cpu = pollingGraphNew cpuCfg 0.5 cpuCallback
       tray = systrayNew
-      net = netMonitorNewWith 1 "wlp3s0" 2 $ setFontSize font "▼$inKB$kb/s\t▲$outKB$kb/s\t"
+      net = netMonitorNewWith 1 "wlp3s0" 2 $ setFontSize font "⏬$inKB$kb/s\t⏫$outKB$kb/s\t"
       voice = do
         l <- pollingLabelNew "voice " 1.0 getVoice
         widgetShowAll l
@@ -73,7 +73,7 @@ main = do
         widgetShowAll l
         return l
       io = dioMonitorNew defaultGraphConfig { graphDataColors = [(1, 1, 1, 1)]
-                                            , graphLabel = Just $ setFontSize font "io"
+                                            , graphLabel = Just $ setFontSize font "💽"
                                             , graphBackgroundColor = (0/255,0/255,0/255)
                                             , graphBorderColor = (128/255,128/255,128/255)
                                             } 1 "sdc"
