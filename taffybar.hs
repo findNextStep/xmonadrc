@@ -37,6 +37,10 @@ getBatteryState = do
   return $ setFontSize font ((if charge then "🗲" else "🔋") ++ "" ++ show battery ++ "%   ")
 setFontSize size str = "<span font=\'" ++ size ++ "\'>" ++ str ++ "</span>"
 
+getfreq = do
+  ischarge <- isCharge
+  if ischarge then return 1.0 else return 10.0
+
 main = do
   let memCfg = defaultGraphConfig { graphDataColors = [(1, 1, 1, 1)]
                                   , graphLabel = Just $ setFontSize font "🍱"
@@ -50,7 +54,8 @@ main = do
                                   , graphBackgroundColor = (0/255,0/255,0/255)
                                   , graphBorderColor = (128/255,128/255,128/255)
                                   }
-  let clock = textClockNew Nothing (setFontSize font "<span>%F %T</span>") 1
+  freq <- getfreq
+  let clock = textClockNew Nothing (setFontSize font "<span>%F %T</span>") freq
       pager = taffyPagerNew defaultPagerConfig { activeWindow     = setFontSize font . colorize "#fff" "" . escape . shorten 50
                                                , activeLayout     = setFontSize font . escape . take 4
                                                , activeWorkspace  = setFontSize font . wrap "-> " "" . escape
@@ -60,23 +65,23 @@ main = do
                                                , urgentWorkspace  = setFontSize font . colorize "red" "yellow" . escape
                                                , widgetSep        = setFontSize font (colorize "#666" "" "|")
                                                }
-      mem = pollingGraphNew memCfg 1 memCallback
-      cpu = pollingGraphNew cpuCfg 0.5 cpuCallback
+      mem = pollingGraphNew memCfg freq memCallback
+      cpu = pollingGraphNew cpuCfg freq cpuCallback
       tray = systrayNew
-      net = netMonitorNewWith 1 "wlp3s0" 2 $ setFontSize font "⏬$inKB$kb/s\t⏫$outKB$kb/s\t"
+      net = netMonitorNewWith freq "wlp3s0" 2 $ setFontSize font "⏬$inKB$kb/s\t⏫$outKB$kb/s\t"
       voice = do
-        l <- pollingLabelNew "voice " 1.0 getVoice
+        l <- pollingLabelNew "voice " freq getVoice
         widgetShowAll l
         return l
       battery = do
-        l <- pollingLabelNew "battery" 1.0 getBatteryState
+        l <- pollingLabelNew "battery" freq getBatteryState
         widgetShowAll l
         return l
       io = dioMonitorNew defaultGraphConfig { graphDataColors = [(1, 1, 1, 1)]
                                             , graphLabel = Just $ setFontSize font "💽"
                                             , graphBackgroundColor = (0/255,0/255,0/255)
                                             , graphBorderColor = (128/255,128/255,128/255)
-                                            } 1 "sdc"
+                                            } freq "sdc"
   taffybarMain defaultTaffybarConfig { startWidgets = [ pager ]
                                         , endWidgets = [ tray, clock, mem, cpu, io, battery, voice, net ]
                                         , barPosition = Bottom
