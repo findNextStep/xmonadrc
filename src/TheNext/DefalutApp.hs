@@ -28,7 +28,7 @@ screenLock = "dm-tool lock"
 
 -- | 默认截图工具
 screenShutter :: String
-screenShutter = "shutter -s -e -n"
+screenShutter = "shutter -s -n"
 
 -- | 默认时钟程序
 myClock :: String
