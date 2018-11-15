@@ -31,7 +31,7 @@ library
                        regex-posix,
                        gtk-traymanager,
                        enclosed-exceptions >= 1.0.0.1,
-                       cairo,
+                       cairo == 0.13.5.0,
                        containers,
                        process,
                        taffybar == 0.4.6,
