@@ -22,9 +22,9 @@ webBrowser = "google-chrome --disable-gpu"
 explorer :: String
 explorer = "nemo"
 
--- | 默认锁屏程序 
+-- | 默认锁屏程序
 screenLock :: String
-screenLock = "dm-tool lock"
+screenLock = "dm-tool lock;gnome-screensaver-command --lock"
 
 -- | 默认截图工具
 screenShutter :: String
