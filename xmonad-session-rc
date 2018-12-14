@@ -48,3 +48,6 @@ rm ~/.xmonad/xmonad.state
 fi
 
 autocutsel &
+
+# 禁用redshift的自启动程序
+systemctl --user stop redshift.service&
