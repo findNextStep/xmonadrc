@@ -1,5 +1,5 @@
 # 转移到统一的位置上去
-if [ -r "~/.xinit-session-rc" ]
+if [ -r ~/.xinit-session-rc ]
 then
     . ~/.xinit-session-rc
 fi
