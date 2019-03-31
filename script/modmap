@@ -6,11 +6,11 @@ add Mod1 = Alt_L Meta_L
 add Mod3 = Alt_R Meta_R
 
 ! 使得右super键为mode_switch
-keycode 134 = Mode_switch Mode_switch Mode_switch Mode_switch
-keycode 44 = j J Down Down
-keycode 45 = k K Up Up
-keycode 43 = h H Left Left
-keycode 46 = l L Right Right
+! keycode 134 = Mode_switch Mode_switch Mode_switch Mode_switch
+! keycode 44 = j J Down Down
+! keycode 45 = k K Up Up
+! keycode 43 = h H Left Left
+! keycode 46 = l L Right Right
 
 ! Swap caps lock and escape
 keycode 66 = Escape
